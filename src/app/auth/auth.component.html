@@ -1,0 +1,26 @@
+<div class="auth-page">
+
+  
+  <div class="login-form">
+    <h2 class="title">Login to your account</h2>
+
+    <form (ngSubmit)="onSubmit(authForm)" #authForm="ngForm"> 
+      
+      <div class="input-container">
+        <input type="text" class="form-control" id="username" name="username" placeholder="Username" ngModel required>
+      </div>
+      
+      <div class="input-container">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password"  ngModel required>
+      </div>
+      
+      <div class="submit-btn">
+        <button type="submit" [disabled]="authForm.invalid">Submit</button>
+      </div>
+    </form>
+  
+  </div>
+  </div>
+
+
+

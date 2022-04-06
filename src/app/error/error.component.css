@@ -1,0 +1,43 @@
+.error-box {
+  position: fixed;
+  top: 30vh;
+  left: 20vw;
+  width: 60vw;
+  padding: 15px;
+  background-color: #FFF;
+  z-index: 100;
+}
+
+.error-box h3 {
+  text-transform: capitalize;
+  text-align: center;
+  font-weight: 900;
+  color: rgba(var(--main-color), 1);
+}
+
+.error-box .error-message {
+  font-size: 18px;
+  color: rgba(var(--secondary-color), 1);
+}
+
+.error-box .solutions {
+ padding-left: 20px;
+  text-transform: capitalize;
+  font-size: 18px;
+  font-weight: 900;
+  list-style: disc;
+}
+
+.error-box .action button{
+  margin-right: 20px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 50;
+}

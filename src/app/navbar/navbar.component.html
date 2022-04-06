@@ -1,0 +1,54 @@
+<nav id="navbar">
+    <div class="container">
+        <div class="brand-logo">
+          <!-- <img src="http://uniontv.online/images/106113565_661121187949923_810752369879621532_n.png" alt=""> -->
+          <h1>UNION IPTV</h1>
+        </div>
+
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a routerLink="/auth">Login</a>
+          </li>
+
+          <li class="nav-item">
+            <a routerLink="/home" routerLinkActive="active" >home</a>
+          </li>
+
+          <li class="nav-item">
+            <a routerLink="/livetv" routerLinkActive="active" >TV live</a>
+          </li>
+          
+          <li class="nav-item">
+            <a routerLink="/movies" routerLinkActive="active" >movies</a>
+          </li>
+          
+          <li class="nav-item">
+            <a routerLink="/shows" routerLinkActive="active" >TV shows</a>
+          </li>
+
+          <li class="nav-item ms-2 me-4 search-icons" appToggleSearch (click)="toggleNavSearchIcon = !toggleNavSearchIcon">
+            <fa-icon [icon]="searchIcon"  class="nav-icon" *ngIf="!toggleNavSearchIcon"></fa-icon>
+            <fa-icon [icon]="closeIcon" id="close-icon" class="nav-icon" *ngIf="toggleNavSearchIcon"></fa-icon>
+          </li>
+            
+          <form class="search-form">
+            <div class="form-group">
+              <input type="text" id="search-input" class="form-control" name="search-field" placeholder="Search For a movie, tv show, person..." autocomplete="off" autocorrect="off" autofill="off" spellcheck="false" >
+              <button type="submit" id="search-sub-btn"><fa-icon [icon]="searchIcon"></fa-icon></button>
+            </div>
+
+          </form>
+          
+          <li class="nav-item">
+            <fa-icon [icon]="settingIcon" class="nav-icon" appDropdown></fa-icon>
+            
+            <ul class="options-list">
+              <li class="option-item"><a href="#">settings</a></li>
+              <li class="option-item"><a href="#">logout</a></li>
+            </ul>
+          </li>
+          
+          
+        </ul>
+    </div>
+</nav>

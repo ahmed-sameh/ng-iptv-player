@@ -1,0 +1,66 @@
+
+<section class="slider-sec" >
+  <div class="container-fluid">
+    
+      <div class="slider-header">
+        
+        <div class="row">
+          <div class="col-sm-12 col-md-3">
+            <h3 class="slider-title">{{ sliderType }}</h3>
+          </div>
+          
+            <div class="col-sm-12 col-md-9">
+              <ul class="slider-nav-list">
+                <li class="nav-item" [ngClass]="{selected : itemsType === 'RecentlyAdded'}">
+                  <button type="button" [disabled]="itemsLoading" (click)="getRecentlyAddedItems()">recently added</button>
+                </li>
+                <li class="nav-item d-none d-md-block" [ngClass]="{selected : itemsType === 'RecentlyWatched'}">
+                  <button type="button" [disabled]="itemsLoading" (click)="getRecentlyWatchedItems()">recently watched</button>
+                </li>
+                <li class="nav-item" [ngClass]="{selected : itemsType === 'Favourites'}">
+                  <button type="button" [disabled]="itemsLoading" (click)="getFavouritesItems()">favourites</button>
+                </li>
+                <li class="nav-item" [ngClass]="{selected : itemsType === 'WatchedList'}">
+                  <button type="button" [disabled]="itemsLoading" (click)=" getWatchedListItems()">watch list</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        
+        <section class= "slider" #movieSliderRef>
+          
+          <button class="pre-btn" ><fa-icon class="icon" [icon]="leftArrowIcon"></fa-icon></button>
+          
+          
+          <div class="slider-container">
+            
+            <div class="text-center mx-auto" style="align-self: center;" *ngIf="itemsLoading">
+              <app-loading-spinner></app-loading-spinner>
+            </div>
+            <div class="text-center mx-auto" style="align-self: center;" *ngIf="!ItemsAvailable">
+              <app-no-items-available></app-no-items-available>
+            </div>
+
+
+            
+            <div class="slider-card" [id]="item.id" *ngFor="let item of sliderItems" [routerLink]="['/movie',item.title | toUrlParams, item.id]">
+              <div class="card-image">
+              <img [src]="item.posterSrc ? item.posterSrc : '../../../assets/imgs/no-image.jpg' " class="card-thumb" [alt]="item.title">
+            </div>
+            <div class="card-info">
+              <h2 class="card-title">{{ item.title }}</h2>
+            </div>
+          </div>
+          
+        </div>
+        
+        <button class="nxt-btn"><fa-icon class="icon" [icon]="rightArrowIcon" ></fa-icon></button>
+        
+      </section>
+    </div>
+  </section>
+
+
+  <app-error [message]="errorMessage" *ngIf="errorMessage" (close)="onErrorHandling()"></app-error>

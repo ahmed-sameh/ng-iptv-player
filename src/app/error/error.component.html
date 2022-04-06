@@ -1,0 +1,18 @@
+<div class="error-box">
+  <h3>error occurred !</h3>
+  <p class="error-message">Error Name :  {{ message }} </p>
+
+    <hr>
+
+  <ul class="solutions">
+    <li>check your interner connection.</li>
+    <li>connect to your service provider.</li>
+  </ul>
+
+  <div class="action text-end">
+    <button type="button" class="btn btn-primary" (click)="onClose()">Close</button>
+  </div>
+
+</div>
+
+<div class="overlay"  (click)="onClose()"></div>

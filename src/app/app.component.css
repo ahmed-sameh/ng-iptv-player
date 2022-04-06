@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&family=Space+Mono:ital,wght@0,400;1,700&display=swap");
+
+/* global styles and  varibles */
+:root {
+  /*yellow color*/
+  --main-color: 253, 198, 58;
+
+  /*gray color*/
+  --secondary-color: 35, 42, 52; 
+  
+  /* transtion duration */
+  --main-transtion-duration: 0.3s;
+
+  /*main-padding of sections*/
+  --main-sec-padding: 40px 0px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Source Sans Pro", "Arial", sans-serif;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+@media (max-width: 400px) {
+  html {
+    overflow-x: hidden;
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+input:focus, textarea:focus, select:focus{
+  outline: none !important;
+}
+
+/* navbar styles */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #dbdbdb;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #acacac;
+}

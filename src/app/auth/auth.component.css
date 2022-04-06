@@ -1,0 +1,126 @@
+.auth-page {
+  width: 100vw;
+  height: calc(100vh - 65px);
+  display: flex;
+  justify-content: center;
+  position: relative;
+  background-image: url('../../assets/imgs/auth-img.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow-x: hidden;
+  z-index: 100;
+  padding-top: 10vh;
+}
+@media (max-width: 400px) {
+  .auth-page {
+    margin-top: 65px;
+  }
+}
+
+
+.auth-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+
+
+.login-form {
+  width: 35vw;
+  height: fit-content;
+  z-index: 1000;
+  background-color: #FFF;
+  filter: blur(.9);
+  padding: 30px;
+  border-radius: 6px;
+}
+
+@media (max-width: 992px) {
+  .login-form {
+    width: 40vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-form {
+    width: 60vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form {
+    width: 95vw;
+  }
+}
+
+.auth-page .title {
+  text-transform: capitalize;
+  font-weight: 700;
+  margin: 0;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.auth-page .input-container {
+  position: relative;
+}
+
+.auth-page .input-container::after {
+  content: '';
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 3px;
+  background-image: linear-gradient(to right, rgba(var(--secondary-color) ,.8) , rgba(var(--main-color) ,1));
+}
+
+
+.auth-page  #username,
+.auth-page  #password {
+  margin-bottom: 20px;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.8);
+  position: relative;
+}
+
+
+
+.form-control:focus {
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.auth-page .submit-btn {
+  text-align: right;
+}
+
+
+.auth-page .submit-btn button {
+  font-size: 18px;
+  font-weight: 800;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+}
+
+.auth-page form.ng-invalid button {
+  background-color: rgba(var(--main-color) ,.7);
+  color: rgba(var(--secondary-color) ,.7);
+}
+
+.auth-page form.ng-valid button {
+  background-color: rgba(var(--main-color) ,1);
+  color: rgba(var(--secondary-color) ,.85);
+}

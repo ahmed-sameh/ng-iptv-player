@@ -1,0 +1,105 @@
+<div class="movie-details-sec" [ngStyle]="{'backgroundImage': pageBackgroundURL}">
+  <div class="container">
+
+    <div class="col-sm-12 col-md-3">
+      <div class="movie-poster">
+          <img [src]="moviePoster" [alt]="movieName">
+      </div>
+      <hr>
+      <div class="movie-actions" *ngIf="movieId">
+        <button class="btn play-btn" type="button" (click)="onWatchMovie()">Watch Movie</button>
+        
+        <a href="http://unioniptv.xyz/movie/samer12/12samer/298283.mp4" target="_blank" class="btn btn-danger download-link">Download Movie</a>
+      </div>
+      
+    </div>
+
+    <div class="col-sm-12 col-md-9">
+
+      <div class="movie-details">
+  
+        <div class="movie-header">
+          <h1 class="movie-title">{{movieName}}</h1>
+          <div class="movie-info">
+            <p class="date" *ngIf="movieReleaseDate">{{movieReleaseDate}}</p>
+
+            <span class="info-bolt" *ngIf="movieGenres"></span>
+            <div class="geners" *ngIf="movieGenres">{{movieGenres}}</div>
+
+            <span class="info-bolt" *ngIf="movieDuration"></span>
+            <div class="run-time" *ngIf="movieDuration"> {{movieDuration}} </div>
+          </div>
+        </div>
+  
+  
+        <div class="actions">
+  
+          <div class="movie-rate">
+            <span class="rate"> {{ movieRate }} </span>
+            <fa-icon [icon]="starRateIcon"  class="rate-icon"></fa-icon>
+          </div>
+
+          <ul class="actions-btns">         
+            <li title="Mark as favorite" (click)="onAddToFavourites()"><fa-icon [icon]="heartIcon"  class="action-icon"></fa-icon></li>
+            <li title="Add To Your Watch List" (click)="onAddToWatchList()"><fa-icon [icon]="watchListIcon"  class="action-icon"></fa-icon></li>
+          </ul>
+  
+          <div *ngIf="movieTrailer" class="trailer-btn" (click)="trailerPlayerRendered = true; PlayerRendered = true;">
+            
+            <fa-icon [icon]="playIcon"  class="trailer-icon"></fa-icon>
+            <span>Play trailer</span>
+          </div>
+  
+        </div>
+
+        
+        <div class="movie-overview" *ngIf="movieOverview">
+  
+            <div class="overview-title">Overview</div>
+            <div class="overview-details"> {{movieOverview}} </div>
+  
+        </div>
+
+        <div class="movie-cast">
+          <div class="movie-director" *ngIf="movieDirector">
+            <h4>director</h4>
+            <p> {{movieDirector}} </p>
+          </div>
+          
+          <div class="movie-actors" *ngIf="movieActors">
+            <h4>actors</h4>
+            <p>{{ movieActors }}</p>
+          </div>
+
+        </div>
+
+
+        <div class="movie-player" *ngIf="PlayerRendered">
+          <div class="container">
+
+            <div class="col-sm-12">
+                  <div class="player-bar">
+                    
+                    <h3 class="movie-name">{{movieName}}</h3>
+                    <button type="button" class="close-button" (click)="PlayerRendered = false; trailerPlayerRendered= false; moviePlayerRendered = false;">X</button>
+                    
+                </div>
+            </div>
+
+            <div class="col-sm-12 video-player">
+              <app-video-player *ngIf="moviePlayerRendered" [videoSrc]="movieVideoSrc"></app-video-player>
+           
+              <iframe *ngIf="trailerPlayerRendered" id="ytplayer" type="text/html" width="100%" height="100%" 
+              [src]="movieTrailer | safe"
+              frameborder="0"></iframe>
+            </div>
+
+          </div>
+        </div>
+  
+      </div>
+    </div>
+
+
+  </div>
+</div>
