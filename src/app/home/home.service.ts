@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { map, tap} from 'rxjs/operators';
+import { exhaustMap, map, take, tap} from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
 import { GetDataService } from '../shared/get.data.service';
 import { Movie, SliderItem, Show } from './movie.show.type';
 
@@ -18,29 +19,55 @@ export class HomeService {
   
 
  
-  //  get today date and convert it to timestamp and sub from it 172800 to get the date from two days ago
-  date = Math.floor(+new Date().getTime() / 1000) - 604800;
+  //  get today date and convert it to timestamp and sub from it 172800 to get the date from 2 weeks ago
+  date = Math.floor(+new Date().getTime() / 1000) - 1209600;
 
 
-  constructor(private getDataService: GetDataService) { }
+  constructor(private getDataService: GetDataService, private authService: AuthService) { }
 
   getRecentlyAddedMovies() {
-    return this.getDataService.getData('http://unioniptv.xyz/player_api.php?username=samer12&password=12samer&action=get_vod_streams').pipe(map(
-      (moviesResponse: Array<Movie>) => {
 
-      const selectedMovies = moviesResponse.filter( movie => movie.added > this.date).slice(0,20);
+    if(this.authService.userAuthData) {
 
-      let recentlyMovies:Array<SliderItem> = [];
+      return this.getDataService.getData(`http://${this.authService.userAuthData.host}/player_api.php?username=${this.authService.userAuthData.username}&password=${this.authService.userAuthData.password}&action=get_vod_streams`).pipe(map(
+        (moviesResponse: Array<Movie>) => {
 
-       selectedMovies.forEach( movie => {
-         recentlyMovies.push({
-           id: movie.stream_id,
-           title: movie.name,
-           posterSrc: movie.stream_icon
+          const selectedMovies = moviesResponse.filter( movie => movie.added > this.date).slice(0,20);
+  
+          let recentlyMovies:Array<SliderItem> = [];
+    
+          selectedMovies.forEach( movie => {
+            recentlyMovies.push({
+              id: movie.stream_id,
+              title: movie.name,
+              posterSrc: movie.stream_icon
+            })
+          })
+          return recentlyMovies
+        }), tap( movies => this.recentlyAddedMovies = movies))
+
+    }else {
+      return this.authService.userAuthenticated.pipe(take(1), exhaustMap(
+        authData => {
+          return this.getDataService.getData(`http://${authData!.host}/player_api.php?username=${authData!.username}&password=${authData!.password}&action=get_vod_streams`)
+        }
+      ),map(
+        (moviesResponse: Array<Movie>) => {
+  
+        const selectedMovies = moviesResponse.filter( movie => movie.added > this.date).slice(0,20);
+  
+        let recentlyMovies:Array<SliderItem> = [];
+  
+         selectedMovies.forEach( movie => {
+           recentlyMovies.push({
+             id: movie.stream_id,
+             title: movie.name,
+             posterSrc: movie.stream_icon
+           })
          })
-       })
-       return recentlyMovies
-    }), tap( movies => this.recentlyAddedMovies = movies))
+         return recentlyMovies
+      }), tap( movies => this.recentlyAddedMovies = movies))
+    }
   }
 
 
@@ -101,23 +128,48 @@ export class HomeService {
 
 
   getRecentlyAddedShows() {
-    
-    return this.getDataService.getData('http://unioniptv.xyz/player_api.php?username=samer12&password=12samer&action=get_series').pipe(map(
-      (showsResponse: Array<Show>) => {
-        const selectedShows = showsResponse.filter(show => +show.last_modified > this.date).slice(0,20);
-        
-        let recentlyShows:Array<SliderItem> = [];
-        
-        selectedShows.forEach( show => {
-          recentlyShows.push({
-            id: show.series_id,
-            title: show.name,
-            posterSrc: show.cover
+
+    if(this.authService.userAuthData) {
+      return this.getDataService.getData(`http://${this.authService.userAuthData.host}/player_api.php?username=${this.authService.userAuthData.username}&password=${this.authService.userAuthData.password}&action=get_series`).pipe(map(
+        (showsResponse: Array<Show>) => {
+          const selectedShows = showsResponse.filter(show => +show.last_modified > this.date).slice(0,20);
+          
+          let recentlyShows:Array<SliderItem> = [];
+          
+          selectedShows.forEach( show => {
+            recentlyShows.push({
+              id: show.series_id,
+              title: show.name,
+              posterSrc: show.cover
+            })
           })
-        })
-        return recentlyShows
-      }
-    ), tap( shows => this.recentlyAddedShows = shows))
+          return recentlyShows
+        }
+      ), tap( shows => this.recentlyAddedShows = shows))
+
+    }else {
+      return this.authService.userAuthenticated.pipe(take(1), exhaustMap(
+        authData => {
+          return this.getDataService.getData(`http://${authData!.host}/player_api.php?username=${authData!.username}&password=${authData!.password}&action=get_series`)
+        }
+      ),map(
+        (showsResponse: Array<Show>) => {
+          const selectedShows = showsResponse.filter(show => +show.last_modified > this.date).slice(0,20);
+          
+          let recentlyShows:Array<SliderItem> = [];
+          
+          selectedShows.forEach( show => {
+            recentlyShows.push({
+              id: show.series_id,
+              title: show.name,
+              posterSrc: show.cover
+            })
+          })
+          return recentlyShows
+        }
+      ), tap( shows => this.recentlyAddedShows = shows))
+    }
+    
   }
 
 

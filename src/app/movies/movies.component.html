@@ -17,3 +17,8 @@
   </div>
 
 </div>
+
+
+<div class="error-block" *ngIf="errorMessage">
+  <app-error [message] = "errorMessage"  (close)="onHandleError()"></app-error>
+</div>

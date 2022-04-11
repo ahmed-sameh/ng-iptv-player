@@ -31,8 +31,8 @@ export class CategoryMoviesComponent implements OnInit {
             this.isLoading = false;
             
           },
-          error: () => {
-            this.router.navigate(['/app-faild']);
+          error: error => {
+            this.moviesService.errorOccured.next(error.name)
             this.isLoading = false;
           }
         })
@@ -66,8 +66,8 @@ export class CategoryMoviesComponent implements OnInit {
           this.categoryName = this.moviesService.catName;
         }  
       },
-      error: () => {
-        this.router.navigate(['/app-faild'])
+      error: error => {
+        this.moviesService.errorOccured.next(error.name)
         this.isLoading = false;
       }
   })
@@ -86,15 +86,11 @@ export class CategoryMoviesComponent implements OnInit {
           this.isLoading = false
         }
       },
-      error: () => {
-        this.router.navigate(['/app-faild']);
+      error: error => {
+        this.moviesService.errorOccured.next(error.name)
         this.isLoading = false
       }
     })
-  }
-
-  onCatBtnClick() {
-    
   }
 
 

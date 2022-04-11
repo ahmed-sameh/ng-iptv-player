@@ -4,7 +4,7 @@
   <div class="login-form">
     <h2 class="title">Login to your account</h2>
 
-    <form (ngSubmit)="onSubmit(authForm)" #authForm="ngForm"> 
+    <form (ngSubmit)="onSubmit(authForm)" #authForm="ngForm" *ngIf="!isLoading"> 
       
       <div class="input-container">
         <input type="text" class="form-control" id="username" name="username" placeholder="Username" ngModel required>
@@ -19,8 +19,19 @@
       </div>
     </form>
   
-  </div>
+    <div class="loading-block text-center" *ngIf="isLoading">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
   </div>
 
+
+
+
+</div>
+
+
+<div class="error-block" *ngIf="userNotAuthenticated">
+  <app-error message="We couldn't validate your information. Want to try again?"  (close)="onHandleError()"></app-error>
+</div>
 
 

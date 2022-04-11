@@ -97,12 +97,18 @@ export class HomeSliderComponent implements OnInit, AfterViewInit {
 
       this.homeService.getRecentlyAddedMovies().subscribe({
         next: movies => {
-          this.sliderItems = movies;
-          this.itemsLoading = false;
+          if(movies.length > 0) {
+            console.log(movies)
+            this.sliderItems = movies;
+            this.itemsLoading = false;
+          }else {
+            this.itemsLoading = false;
+            this.ItemsAvailable = false;
+          }
         },
         error: error => this.onErrorOccurred(error.name)
       })
-
+      
     }else {
       // if it have the recently moves. i get it and render it 
       this.sliderItems = this.homeService.recentlyAddedMovies;

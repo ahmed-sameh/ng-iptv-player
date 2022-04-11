@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { exhaustMap, map, take, throwError } from 'rxjs';
+import { Router } from '@angular/router';
+import { catchError, forkJoin, of, Subject } from 'rxjs';
+import { User } from './user.model';
 
 
 export interface AuthResponse {
@@ -14,58 +16,93 @@ export interface AuthResponse {
   providedIn: 'root'
 })
 export class AuthService {
+  userData:any = null;
+  hostsArray = ['u-on.cc:2095', 'sharkiptvpro.xyz:80' ,'unioniptv.xyz', 'channelstv.online:8080'];
+  userAuthenticated =  new Subject<User | null>();
+  userAuthData:User | null = null;
+  userLogout = false;
+  private userExpirestimer: any;
 
-  hostsArray = ['u-on.cc:2095','unioniptv.xyz'];
+  constructor(private http: HttpClient, private router: Router) { }
 
-  constructor(private http: HttpClient) { }
+
+
 
   login(username: string, password: string) {
-    // let responseData;
     
-    // for(let host of this.hostsArray) {
+    const requestsArray = this.hostsArray.map(host => this.http.get(`http://${host}/player_api.php?username=${username}&password=${password}`).pipe(catchError(error => of(error))))
+     
+    const userAuthResponses = forkJoin(requestsArray)
 
-    //   this.http.get<any>(`http://${host}/player_api.php?username=${username}&password=${password}`).subscribe({
-    //     next: userData => {
-    //       console.log(userData.user_info)
-    //       responseData = userData.user_info;
-    //     },
-    //     error: () => {
-    //       responseData = 'no user';
-    //     }
-    //   })
-  
-    //   if(responseData === 'no user') {
-    //     continue;
-    //   }else {
-    //     console.log('response case case')
-    //     console.log(responseData)
-    //     break;
-    //   }
-    // }
-    // return responseData;
-    
-    return this.http.get(`http://${this.hostsArray[0]}/player_api.php?username=${username}&password=${password}`).pipe(take(1),map(
-      responseData => {
-        let authProcess: {continue: boolean, userData:any};
-        console.log(responseData)
-        if(responseData) {
-          authProcess = {continue: false, userData: responseData};
-        }else {
-          authProcess = {continue: true, userData: null};
+    userAuthResponses.subscribe({
+      next: (responses: any[]) => {
+          for(let [index,response] of responses.entries()) {   
+            if(response.hasOwnProperty('user_info') && response.user_info.auth === 1 && index < responses.length) {
+              this.userData = response;
+              // console.clear();
+              break;
+            }  
+          }
+          if(this.userData) {
+            let expiresDate!:Date; 
+            if(this.userData.user_info.exp_date) {
+              expiresDate  = new Date( Date.now() + +this.userData.user_info.exp_date * 1000);
+              console.log('test')
+            }else {
+              expiresDate = new Date(Date.now() + 15552000)
+            } 
+
+            console.log(expiresDate)
+
+            const user = new User(this.userData.user_info.username, this.userData.user_info.password, expiresDate, `${this.userData.server_info.url}:${this.userData.server_info.port}`);
+            this.userAuthenticated.next(user);
+            this.userAuthData = user;
+            localStorage.setItem("userData", JSON.stringify(user));
+            this.autoLogout(15552000);
+            
+          }else {
+            this.userAuthenticated.next(null);
+          }
         }
-        return authProcess
-      }
-    ), exhaustMap( (authContinue: {continue: boolean, userData:any}) => {
-      if(authContinue.continue) {
-        return this.http.get(`http://${this.hostsArray[1]}/player_api.php?username=${username}&password=${password}`)
-      }else {
-        return authContinue.userData 
-      }
-    }))
- 
-      
-    
+      })
+  }
 
+
+  autoLogin() {
+    const userData = JSON.parse(localStorage.getItem('userData')!);
+    if(!userData) {return}
     
+    const loadedUser = new User(userData.username, userData.password, new Date(userData.exp_date), userData.host);
+    
+    if(new Date() < loadedUser.exp_date) {
+      this.userAuthenticated.next(loadedUser);
+      this.userAuthData = loadedUser;
+
+      const expiresDate = new Date(loadedUser.exp_date).getTime() - new Date().getTime();
+      this.autoLogout(expiresDate);
+    }
+
+
+  }
+
+
+
+
+  logout() {
+    this.userAuthenticated.next(null);
+    localStorage.removeItem('userData');
+    this.userAuthData = null;
+    this.router.navigate(['/auth'])
+    this.userLogout = true;
+
+    if(this.userExpirestimer) {
+      clearTimeout(this.userExpirestimer)
+    }
+
+    this.userExpirestimer = null
+  }
+
+  autoLogout(expiresDuration: number) {
+    this.userExpirestimer = setTimeout(() => {this.logout()},expiresDuration)
   }
 }

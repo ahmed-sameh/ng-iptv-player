@@ -3,7 +3,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { MoviesService } from '../movies.service';
 import { faHeart, faStar, faBookmark, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { exhaustMap, take, tap } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
+import { User } from 'src/app/auth/user.model';
+import { AuthService } from 'src/app/auth/auth.service';
 
 type MovieDetailsResponse  = {
   info : {
@@ -21,7 +22,8 @@ type MovieDetailsResponse  = {
     actors?: string
   }, movie_data?: {
     container_extension?: string,
-    stream_id?: string
+    stream_id?: string,
+    name?:string
   }
 }
 
@@ -57,17 +59,23 @@ export class MovieDetailsComponent implements OnInit {
   movieVideoExtention = '';
   movieVideoSrc = '';
 
+  userAuthData:null | User = null;
 
 
-  constructor(private currentRoute: ActivatedRoute, private moviesService: MoviesService, private cookieService: CookieService) { }
+
+  constructor(private currentRoute: ActivatedRoute, private authService: AuthService, private moviesService: MoviesService) { }
 
   ngOnInit(): void {
+
+    this.userAuthData = this.authService.userAuthData;
+
     this.currentRoute.params.pipe(take(1), exhaustMap((movieParams: Params) => {
         this.movieId = movieParams['movieId'];
         return this.moviesService.getMovieDetails(this.movieId)
       })).subscribe({
         next: (movieObject: MovieDetailsResponse) => {
-          this.movieName = movieObject.info.name || movieObject.info.o_name || 'movie name';
+          console.log(movieObject)
+          this.movieName = movieObject.info.name || movieObject.info.o_name || movieObject.movie_data?.name || 'movie name';
           this.moviePoster = movieObject.info.movie_image ? movieObject.info.movie_image : '../../../assets/imgs/no-image.jpg' ;
           this.movieReleaseDate = movieObject.info.releasedate ? movieObject.info.releasedate.replaceAll('-', '/') : '';
           this.movieGenres = movieObject.info.genre ? movieObject.info.genre : '';
@@ -80,9 +88,9 @@ export class MovieDetailsComponent implements OnInit {
           this.movieId = movieObject && movieObject.movie_data && movieObject.movie_data.stream_id  ? movieObject.movie_data.stream_id : '' ;
           this.pageBackgroundURL = movieObject.info.backdrop_path && movieObject.info.backdrop_path[0] ? `url('${movieObject.info.backdrop_path[0]}')` :`url('../../../assets/imgs/defult-dropback-bg.jpg')`;
           this.movieVideoExtention = movieObject && movieObject.movie_data && movieObject.movie_data.container_extension ? movieObject.movie_data.container_extension : 'mp4';
-          this.movieVideoSrc = `http://unioniptv.xyz/movie/samer12/12samer/${this.movieId}.${this.movieVideoExtention}`;
+          this.movieVideoSrc = `http://${this.userAuthData!.host}/movie/${this.userAuthData!.username}/${this.userAuthData!.password}/${this.movieId}.${this.movieVideoExtention}`;
         },
-        error: error =>  console.log(error)
+        error: error =>  this.moviesService.errorOccured.next(error.name)
       });
   }
 

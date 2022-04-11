@@ -5,10 +5,7 @@
           <h1>UNION IPTV</h1>
         </div>
 
-        <ul class="nav-list">
-          <li class="nav-item">
-            <a routerLink="/auth">Login</a>
-          </li>
+        <ul class="nav-list" *ngIf="isAuthenticated">
 
           <li class="nav-item">
             <a routerLink="/home" routerLinkActive="active" >home</a>
@@ -43,8 +40,8 @@
             <fa-icon [icon]="settingIcon" class="nav-icon" appDropdown></fa-icon>
             
             <ul class="options-list">
-              <li class="option-item"><a href="#">settings</a></li>
-              <li class="option-item"><a href="#">logout</a></li>
+              <li class="option-item"><a>settings</a></li>
+              <li class="option-item" (click)="onLogout()"><a>logout</a></li>
             </ul>
           </li>
           

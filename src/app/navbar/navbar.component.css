@@ -217,6 +217,7 @@ nav .nav-list .nav-item .options-list li a {
   font-weight: 600;
   text-transform: capitalize;
   transition: var(--main-transtion-duration);
+  cursor: pointer;
 }
 
 

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { CategoryResponse, MoviesService } from '../movies.service';
 
 @Component({
@@ -10,14 +9,14 @@ import { CategoryResponse, MoviesService } from '../movies.service';
 export class MoviesCategoriesComponent implements OnInit {
   categories!: CategoryResponse[];
 
-  constructor(private moviesService: MoviesService, private router: Router) { }
+  constructor(private moviesService: MoviesService) { }
 
   ngOnInit(): void {
     if(this.moviesService.moviesCategories.length === 0) {
 
       this.moviesService.getCategories().subscribe({
         next: catResponse => this.categories = catResponse,
-        error: () => this.router.navigate(['/app-faild'])
+        error: error => this.moviesService.errorOccured.next(error.name)
       })
 
     }else {

@@ -124,3 +124,10 @@
   background-color: rgba(var(--main-color) ,1);
   color: rgba(var(--secondary-color) ,.85);
 }
+
+
+
+
+.error-block {
+  z-index: 99999;
+}

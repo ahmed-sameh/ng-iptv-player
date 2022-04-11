@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { exhaustMap, take, tap } from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
 import { GetDataService } from '../shared/get.data.service';
 
 export interface CategoryResponse {
@@ -21,19 +23,55 @@ export class MoviesService {
   catName = '';
   moviesCategories:CategoryResponse[] = [];
   catMovies: MoviesResponse[] =[];
+  errorOccured = new Subject<string>();
   
 
-  constructor(private getDataService: GetDataService) { }
+  constructor(private getDataService: GetDataService, private authService: AuthService) { }
 
   getCategories() {
-    return this.getDataService.getData('http://unioniptv.xyz/player_api.php?username=samer12&password=12samer&action=get_vod_categories').pipe(tap(categoriesResp => this.moviesCategories = categoriesResp))
+    if(this.authService.userAuthData) {
+      return this.getDataService.getData(`http://${this.authService.userAuthData!.host}/player_api.php?action=get_vod_categories&password=${this.authService.userAuthData!.password}&username=${this.authService.userAuthData!.username}`)
+
+    }else {
+      return this.authService.userAuthenticated.pipe(take(1), exhaustMap(
+        userData => {
+          return this.getDataService.getData(`http://${userData!.host}/player_api.php?username=${userData!.username}&password=${userData!.password}&action=get_vod_categories`)
+        }
+      ),tap(categoriesResp => this.moviesCategories = categoriesResp))
+    }
+    
   }
   
+  
+  
   getCategoryMovies(categoryId:string) {
-    return this.getDataService.getData(`http://unioniptv.xyz/player_api.php?username=samer12&password=12samer&action=get_vod_streams&category_id=${categoryId}`).pipe(tap(moviesRes => this.catMovies = moviesRes ))
+    if(this.authService.userAuthData) {
+      return this.getDataService.getData(`http://${this.authService.userAuthData.host}/player_api.php?username=${this.authService.userAuthData.username}&password=${this.authService.userAuthData.password}&action=get_vod_streams&category_id=${categoryId}`)
+  
+    }else {
+     
+      return this.authService.userAuthenticated.pipe(take(1), exhaustMap(
+        userData => {
+          return this.getDataService.getData(`http://${userData!.host}/player_api.php?username=${userData!.username}&password=${userData!.password}&action=get_vod_streams&category_id=${categoryId}`)
+        }
+      ),tap(moviesRes => this.catMovies = moviesRes))
+    }
+    
   }
-
+  
   getMovieDetails(movieId:string){
-    return this.getDataService.getData(`http://unioniptv.xyz/player_api.php?username=samer12&password=12samer&action=get_vod_info&vod_id=${movieId}`)
+
+    if(this.authService.userAuthData) {
+      return this.getDataService.getData(`http://${this.authService.userAuthData.host}/player_api.php?username=${this.authService.userAuthData.username}&password=${this.authService.userAuthData.password}&action=get_vod_info&vod_id=${movieId}`)
+  
+    }else {
+     
+      return this.authService.userAuthenticated.pipe(take(1), exhaustMap(
+        userData => {
+          return this.getDataService.getData(`http://${userData!.host}/player_api.php?username=${userData!.username}&password=${userData!.password}&action=get_vod_info&vod_id=${movieId}`)
+        }
+      ),tap(moviesRes => this.catMovies = moviesRes))
+    }
+
   }
 }
