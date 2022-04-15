@@ -85,17 +85,12 @@
 }
 
 .movie-details-sec .movie-actions .download-link {
-
   width: 100%;
   color: #FFF;
   font-size: 18px;
   font-weight: 700;
-  /* background-color: red; */
 }
 
-.movie-details-sec .movie-actions .download-link:hover {
-  /* background-color: ; */
-}
 
 
   

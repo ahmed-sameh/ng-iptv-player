@@ -8,6 +8,8 @@ import { LiveTvComponent } from './live-tv/live-tv.component';
 import { CategoryMoviesComponent } from './movies/category-movies/category-movies.component';
 import { MovieDetailsComponent } from './movies/movie-details/movie-details.component';
 import { MoviesComponent } from './movies/movies.component';
+import { CatShowsComponent } from './shows/cat-shows/cat-shows.component';
+import { ShowDetailsComponent } from './shows/show-details/show-details.component';
 import { ShowsComponent } from './shows/shows.component';
 
 const routes: Routes = [
@@ -20,7 +22,12 @@ const routes: Routes = [
       {path:':categoryName/:categoryId', component: CategoryMoviesComponent},
   ]},
   {path:'movie/:movieName/:movieId', component: MovieDetailsComponent},
-  {path:'shows', component: ShowsComponent,canActivate: [AuthGurd]},
+  {path:'shows', component: ShowsComponent,canActivate: [AuthGurd],
+  children:[
+    {path:'', component: CatShowsComponent, pathMatch: 'full'},
+    {path:':categoryName/:categoryId', component: CatShowsComponent},
+  ]},
+  {path:'show/:showName/:showId', component: ShowDetailsComponent},
   {path:'livetv', component: LiveTvComponent,canActivate: [AuthGurd]},
   {path:'app-faild', component: ErrorComponent},
   {path:'', redirectTo: 'home', pathMatch: 'full'}

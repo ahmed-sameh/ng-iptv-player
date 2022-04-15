@@ -1,0 +1,29 @@
+<div class="category-name">
+
+  <h2>{{ categoryName | dashedCatName }}</h2>
+</div>
+
+
+ <div *ngIf="isLoading" class="loading-spinner">
+   <app-loading-spinner></app-loading-spinner>
+ </div>
+ 
+ 
+ <div class="no-items-component" *ngIf="noItemsAvalible">
+  <app-no-items-available></app-no-items-available>
+</div>
+
+
+ <div class="shows-container" *ngIf="!isLoading && !noItemsAvalible">
+   
+   <div class="show-item" *ngFor="let show of showsOfCategory" [id]="show.series_id" [routerLink]="['/show',show.name | toUrlParams, show.series_id]">
+     <div class="show-poster">
+       <img [src]="show.cover ? show.cover : '../../../assets/imgs/no-image.jpg' " class="card-thumb" [alt]="show.name">
+     </div>
+
+     <h4 class="show-name">{{ show.name | cutLongString }}</h4>
+
+   </div>
+
+ </div>
+   

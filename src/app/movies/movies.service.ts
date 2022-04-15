@@ -21,8 +21,8 @@ export interface MoviesResponse {
 export class MoviesService {
 
   catName = '';
-  moviesCategories:CategoryResponse[] = [];
   catMovies: MoviesResponse[] =[];
+  moviesCategories:CategoryResponse[] = [];
   errorOccured = new Subject<string>();
   
 
@@ -39,7 +39,6 @@ export class MoviesService {
         }
       ),tap(categoriesResp => this.moviesCategories = categoriesResp))
     }
-    
   }
   
   
@@ -70,7 +69,7 @@ export class MoviesService {
         userData => {
           return this.getDataService.getData(`http://${userData!.host}/player_api.php?username=${userData!.username}&password=${userData!.password}&action=get_vod_info&vod_id=${movieId}`)
         }
-      ),tap(moviesRes => this.catMovies = moviesRes))
+      ))
     }
 
   }

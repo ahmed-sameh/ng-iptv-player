@@ -1,0 +1,135 @@
+<div class="show-details-sec" [ngStyle]="{'backgroundImage': pageBackgroundURL}">
+  <div class="container">
+
+    <div class="row">
+          
+    <div class="col-sm-12 col-md-3 p-0">
+      <div class="show-poster">
+          <img [src]="showPoster" [alt]="showName">
+      </div>
+      <hr>
+      <ul class="seaons-list" [ngClass]="{'seasons-visible' : seasonsVisible}">
+        <div class="mobile-seasons-button d-md-none"  (click)="seasonsVisible = !seasonsVisible">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <li class="season-item " *ngFor="let seasonNum of showSeasons" [ngClass]="{active : renderedSeason === seasonNum}" (click)="onSeasonEpisodesRender(seasonNum)"> Season {{ seasonNum }} </li>
+      </ul>
+      
+    </div>
+
+    <div class="col-sm-12 col-md-9 ps-md-4">
+
+      <div class="show-details">
+  
+        <div class="show-header">
+          <h1 class="show-title">{{showName}}</h1>
+          <div class="show-info">
+            <p class="date" *ngIf="showReleaseDate">{{showReleaseDate}}</p>
+
+            <span class="info-bolt" *ngIf="showGenres && showReleaseDate"></span>
+
+            <div class="geners" *ngIf="showGenres">{{showGenres}}</div>
+          </div>
+        </div>
+  
+  
+        <div class="actions">
+  
+          <div class="show-rate">
+            <span class="rate"> {{ showRate }} </span>
+            <fa-icon [icon]="starRateIcon"  class="rate-icon"></fa-icon>
+          </div>
+
+          <ul class="actions-btns">         
+            <li title="Mark as favorite" (click)="onAddToFavourites()"><fa-icon [icon]="heartIcon"  class="action-icon"></fa-icon></li>
+            <li title="Add To Your Watch List" (click)="onAddToWatchList()"><fa-icon [icon]="watchListIcon"  class="action-icon"></fa-icon></li>
+          </ul>
+  
+          <div *ngIf="showTrailer" class="trailer-btn" (click)="trailerPlayerRendered = true; PlayerRendered = true;">
+            
+            <fa-icon [icon]="playIcon"  class="trailer-icon"></fa-icon>
+            <span>Play trailer</span>
+          </div>
+  
+        </div>
+
+        
+        <div class="show-overview" *ngIf="showOverview">
+  
+            <div class="overview-title">Overview</div>
+            <div class="overview-details"> {{showOverview}} </div>
+  
+        </div>
+
+        <div class="show-cast">
+          <div class="show-director" *ngIf="showDirector">
+            <h4>director</h4>
+            <p> {{showDirector}} </p>
+          </div>
+          
+          <div class="show-actors" *ngIf="showActors">
+            <h4>actors</h4>
+            <p>{{ showActors }}</p>
+          </div>
+
+        </div>
+
+        <div class="episodes-sec" *ngIf="renderedSeason">
+
+          <h4 class="season-header">Season {{ renderedSeason }} Episodes</h4>
+
+          <div class="episodes-container">
+
+            <div class="episode-card" *ngFor="let episode of selectedSeason" [id] = "episode.id" (click)="onWatchEpisode(episode.id, episode.title,episode.container_extension)">
+              <div class="card-poster">
+                <img [src]="showPoster" alt="">
+              </div>
+              <div class="card-body">
+                <p class="card-name"> S{{ +renderedSeason > 9 ? renderedSeason : '0'+renderedSeason }} E{{ +episode.episode_num > 9 ? episode.episode_num : '0'+episode.episode_num }}</p>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="show-player" *ngIf="PlayerRendered">
+          <div class="container">
+
+            <div class="col-sm-12">
+                  <div class="player-bar">
+                    
+                    <h3 class="show-name">{{showName}}</h3>
+                    <button type="button" class="close-button" (click)="PlayerRendered = false; trailerPlayerRendered= false; showPlayerRendered = false;">X</button>
+                    
+                </div>
+            </div>
+
+            <div class="col-sm-12 video-player">
+              <app-video-player *ngIf="showPlayerRendered" [videoSrc]="episodeVideoSrc"></app-video-player>
+           
+              <iframe *ngIf="trailerPlayerRendered" id="ytplayer" type="text/html" width="100%" height="100%" 
+              [src]="showTrailer | safe"
+              frameborder="0"></iframe>
+            </div>
+
+          </div>
+        </div>
+  
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+
+</div>

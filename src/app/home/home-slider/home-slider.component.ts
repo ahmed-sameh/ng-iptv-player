@@ -1,3 +1,4 @@
+
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { faChevronRight,faChevronLeft} from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +11,7 @@ import { SliderItem } from '../movie.show.type'
   styleUrls: ['./home-slider.component.css']
 })
 export class HomeSliderComponent implements OnInit, AfterViewInit {
-  @ViewChild('movieSliderRef', {static: true}) sliderRef!: ElementRef;
+  @ViewChild('SliderRef', {static: true}) sliderRef!: ElementRef;
   @Input() sliderType!: 'movies' | 'shows';
 
   rightArrowIcon = faChevronRight;
@@ -21,14 +22,17 @@ export class HomeSliderComponent implements OnInit, AfterViewInit {
   ItemsAvailable = true;
   errorMessage = '';
   itemsType = 'RecentlyAdded';
+  sliderItemsType!:'movie' | 'show';
 
   constructor(private homeService: HomeService, private router: Router){}
   
   ngOnInit(): void {  
     if(this.sliderType === 'movies'){
       this.getRecentltAddedMovies();
+      this.sliderItemsType = 'movie';
     }else if(this.sliderType === 'shows'){
       this.getRecentltAddedShows();
+      this.sliderItemsType = 'show';
     }
   }
   
@@ -57,7 +61,7 @@ export class HomeSliderComponent implements OnInit, AfterViewInit {
     if(this.sliderType === 'movies') {
       this.getRecentlyWatchedMovies();
     }else if(this.sliderType === 'shows') {
-      this.sliderItems = this.homeService.recentlyAddedShows;
+      this.getRecentlyWatchedShows();
     }
   }
   
@@ -68,7 +72,7 @@ export class HomeSliderComponent implements OnInit, AfterViewInit {
     if(this.sliderType === 'movies') {
       this.getFavouritesMovies();
     }else if(this.sliderType === 'shows') {
-      this.sliderItems = this.homeService.recentlyAddedShows;
+      this.getFavouritesShows();
     }
   }
   
@@ -79,7 +83,7 @@ export class HomeSliderComponent implements OnInit, AfterViewInit {
     if(this.sliderType === 'movies') {
       this.getMoviesWatchList();
     }else if(this.sliderType === 'shows') {
-      this.sliderItems = this.homeService.recentlyAddedShows;
+      this.getShowsWatchList();
     }
   }
   
@@ -98,7 +102,6 @@ export class HomeSliderComponent implements OnInit, AfterViewInit {
       this.homeService.getRecentlyAddedMovies().subscribe({
         next: movies => {
           if(movies.length > 0) {
-            console.log(movies)
             this.sliderItems = movies;
             this.itemsLoading = false;
           }else {
@@ -189,6 +192,66 @@ export class HomeSliderComponent implements OnInit, AfterViewInit {
   }
   
   
+  
+  getRecentlyWatchedShows() {
+    if(this.homeService.recentlyWatchedShows.length > 0) {
+      this.sliderItems = this.homeService.recentlyWatchedShows;
+    }else{
+      let showsItems = this.homeService.getRecentlyWatchedShows();
+      if(showsItems) {
+        this.sliderItems = showsItems;
+      }else {
+        this.ItemsAvailable = false;
+      }  
+    }
+  }
+
+  
+  getFavouritesShows() {
+    if(this.homeService.favouritesShows.length > 0) {
+      this.sliderItems = this.homeService.favouritesShows;
+    }else{
+      let showsItems = this.homeService.getFavouritesShows();
+      if(showsItems) {
+        this.sliderItems = showsItems;
+      }else {
+        this.ItemsAvailable = false;
+      }  
+    }
+  }
+
+  
+  getShowsWatchList() {
+    if(this.homeService.showsWatchList.length > 0) {
+      this.sliderItems = this.homeService.showsWatchList;
+    }else{
+      let showsItems = this.homeService.getShowsWatchedList();
+      if(showsItems) {
+        this.sliderItems = showsItems;
+      }else {
+        this.ItemsAvailable = false;
+      }  
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
   onSliderScrollHandler() {

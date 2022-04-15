@@ -72,8 +72,8 @@ export class HomeService {
 
 
   getRecentlyWatchedMovies() {
-    if(localStorage.getItem('latestWatchArray')) {
-      const recentlyMovies = JSON.parse(localStorage.getItem('latestWatchArray')!);
+    if(localStorage.getItem('latestWatchedMoviesArray')) {
+      const recentlyMovies = JSON.parse(localStorage.getItem('latestWatchedMoviesArray')!);
       recentlyMovies.forEach((movie: any) => {
         let movieItem = {id: movie.itemID, title: movie.itemName, posterSrc: movie.itemPoster};
         this.recentlyWatchedMovies.push(movieItem);
@@ -86,7 +86,6 @@ export class HomeService {
 
 
   getFavouritesMovies() {
-    console.log(localStorage.getItem('favMovieArray'))
     if(localStorage.getItem('favMovieArray')) {
       const favMovies = JSON.parse(localStorage.getItem('favMovieArray')!);
       favMovies.forEach((movie: any) => {
@@ -101,9 +100,8 @@ export class HomeService {
 
 
   getMoviesWatchedList() {
-    console.log(localStorage.getItem('watchedList'))
-    if(localStorage.getItem('watchedList')) {
-      const moviesList = JSON.parse(localStorage.getItem('watchedList')!);
+    if(localStorage.getItem('moviesWatchedList')) {
+      const moviesList = JSON.parse(localStorage.getItem('moviesWatchedList')!);
       moviesList.forEach((movie: any) => {
         let movieItem = {id: movie.itemID, title: movie.itemName, posterSrc: movie.itemPoster};
         this.moviesWatchList.push(movieItem);
@@ -170,6 +168,49 @@ export class HomeService {
       ), tap( shows => this.recentlyAddedShows = shows))
     }
     
+  }
+
+  
+
+  getRecentlyWatchedShows() {
+    if(localStorage.getItem('latestWatchedShowsArray')) {
+      const recentlyShows = JSON.parse(localStorage.getItem('latestWatchedShowsArray')!);
+      recentlyShows.forEach((show: any) => {
+        let showItem = {id: show.itemID, title: show.itemName, posterSrc: show.itemPoster};
+        this.recentlyWatchedShows.push(showItem);
+      })
+      return this.recentlyWatchedShows
+    }else {
+      return null;
+    }
+  }
+
+
+  getFavouritesShows() {
+    if(localStorage.getItem('favShowsArray')) {
+      const favShows = JSON.parse(localStorage.getItem('favShowsArray')!);
+      favShows.forEach((show: any) => {
+        let showItem = {id: show.itemID, title: show.itemName, posterSrc: show.itemPoster};
+        this.favouritesShows.push(showItem);
+      })
+      return this.favouritesShows
+    }else {
+      return null;
+    }
+  }
+
+
+  getShowsWatchedList() {
+    if(localStorage.getItem('tvShowsWatchedList')) {
+      const showsList = JSON.parse(localStorage.getItem('tvShowsWatchedList')!);
+      showsList.forEach((show: any) => {
+        let showItem = {id: show.itemID, title: show.itemName, posterSrc: show.itemPoster};
+        this.showsWatchList.push(showItem);
+      })
+      return this.showsWatchList
+    }else {
+      return null;
+    }
   }
 
 

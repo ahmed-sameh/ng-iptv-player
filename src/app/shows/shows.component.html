@@ -1,1 +1,23 @@
-<p>shows works!</p>
+<div class="row">
+
+  <div class="col-md-2 p-0 categories-component" [ngClass]="{'cat-visible' : categoryVisible}">
+    <app-shows-categories-list></app-shows-categories-list>
+    
+    
+    <div class="mobile-cat-button d-md-none"  (click)="categoryVisible = !categoryVisible">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    
+  </div>
+
+  <div class="col-sm-12 col-md-10 p-0 shows-component">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
+
+<div class="error-block" *ngIf="errorMessage">
+  <app-error [message] = "errorMessage"  (close)="onHandleError()"></app-error>
+</div>

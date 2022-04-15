@@ -16,7 +16,6 @@ import { MoviesComponent } from './movies/movies.component';
 import { ShowsComponent } from './shows/shows.component';
 import { LiveTvComponent } from './live-tv/live-tv.component';
 import { ErrorComponent } from './error/error.component';
-import { HomeSliderComponent } from './home/home-slider/home-slider.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { MoviesCategoriesComponent } from './movies/movies-categories/movies-categories.component';
 import { CategoryMoviesComponent } from './movies/category-movies/category-movies.component';
@@ -26,15 +25,19 @@ import { HomeService } from './home/home.service';
 import { MoviesService } from './movies/movies.service';
 
 
-import { DashedCatNamePipe } from './movies/category-movies/dashed.name.pipe';
+import { DashedCatNamePipe } from './shared/dashed.name.pipe';
 import { cutStringsPipe } from './shared/cut.strings.pipe';
 import { urlParamsTransformPipe } from './shared/nameToUrlPrams.pipe';
 import { VideoPlayerComponent } from './shared/video-player/video-player.component';
 import { SafePipe } from './shared/safe.pipe';
 import { CookieService } from 'ngx-cookie-service';
-import { NoItemsAvailableComponent } from './home/home-slider/no-items-available/no-items-available.component';
 import { AuthComponent } from './auth/auth.component';
 import { FormsModule } from '@angular/forms';
+import { ShowsCategoriesListComponent } from './shows/shows-categories-list/shows-categories-list.component';
+import { CatShowsComponent } from './shows/cat-shows/cat-shows.component';
+import { NoItemsAvailableComponent } from './shared/no-items-available/no-items-available.component';
+import { HomeSliderComponent } from './home/home-slider/home-slider.component';
+import { ShowDetailsComponent } from './shows/show-details/show-details.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,6 @@ import { FormsModule } from '@angular/forms';
     DropdownDirective,
     ToggleSearchDirective,
     ErrorComponent,
-    HomeSliderComponent,
     LoadingSpinnerComponent,
     MoviesCategoriesComponent,
     CategoryMoviesComponent,
@@ -58,7 +60,11 @@ import { FormsModule } from '@angular/forms';
     VideoPlayerComponent,
     SafePipe,
     NoItemsAvailableComponent,
-    AuthComponent
+    AuthComponent,
+    ShowsCategoriesListComponent,
+    CatShowsComponent,
+    HomeSliderComponent,
+    ShowDetailsComponent
   ],
   imports: [
     BrowserModule,

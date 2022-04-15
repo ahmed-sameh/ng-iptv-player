@@ -74,7 +74,6 @@ export class MovieDetailsComponent implements OnInit {
         return this.moviesService.getMovieDetails(this.movieId)
       })).subscribe({
         next: (movieObject: MovieDetailsResponse) => {
-          console.log(movieObject)
           this.movieName = movieObject.info.name || movieObject.info.o_name || movieObject.movie_data?.name || 'movie name';
           this.moviePoster = movieObject.info.movie_image ? movieObject.info.movie_image : '../../../assets/imgs/no-image.jpg' ;
           this.movieReleaseDate = movieObject.info.releasedate ? movieObject.info.releasedate.replaceAll('-', '/') : '';
@@ -97,24 +96,23 @@ export class MovieDetailsComponent implements OnInit {
   onAddToWatchList() {
     let watchedList:{itemID: string, itemName: string, itemPoster: string}[] = [];
 
-    if(localStorage.getItem('watchedList')) {
-      watchedList =  JSON.parse(localStorage.getItem('watchedList')!);
+    if(localStorage.getItem('moviesWatchedList')) {
+      watchedList =  JSON.parse(localStorage.getItem('moviesWatchedList')!);
       let movieExist = false;
       watchedList.forEach(movie => {
         if(movie.itemID === this.movieId) {
           movieExist = true;
-          console.log(movieExist);
         } 
       }) 
 
       if(!movieExist) {
         watchedList.push({itemID: this.movieId, itemName: this.movieName, itemPoster: this.moviePoster});
-        localStorage.removeItem('watchedList');
-        localStorage.setItem('watchedList', JSON.stringify(watchedList))
+        localStorage.removeItem('moviesWatchedList');
+        localStorage.setItem('moviesWatchedList', JSON.stringify(watchedList))
       }
     }else {
       watchedList = [{itemID:this.movieId, itemName:this.movieName, itemPoster:this.moviePoster}];
-      localStorage.setItem('watchedList', JSON.stringify(watchedList));
+      localStorage.setItem('moviesWatchedList', JSON.stringify(watchedList));
     }
   }
 
@@ -127,7 +125,6 @@ export class MovieDetailsComponent implements OnInit {
       favMovieArray.forEach(movie => {
         if(movie.itemID === this.movieId) {
           movieExist = true;
-          console.log(movieExist);
         } 
       }) 
 
@@ -147,24 +144,23 @@ export class MovieDetailsComponent implements OnInit {
   onAddToLatestWatch() {
     let latestWatchArray:{itemID: string, itemName: string, itemPoster: string}[] = [];
   
-    if(localStorage.getItem('latestWatchArray')) {
-      latestWatchArray =  JSON.parse(localStorage.getItem('latestWatchArray')!);
+    if(localStorage.getItem('latestWatchedMoviesArray')) {
+      latestWatchArray =  JSON.parse(localStorage.getItem('latestWatchedMoviesArray')!);
       let movieExist = false;
       latestWatchArray.forEach(movie => {
         if(movie.itemID === this.movieId) {
           movieExist = true;
-          console.log(movieExist);
         } 
       }) 
   
       if(!movieExist) {
         latestWatchArray.push({itemID: this.movieId, itemName: this.movieName, itemPoster: this.moviePoster});
-        localStorage.removeItem('latestWatchArray');
-        localStorage.setItem('latestWatchArray', JSON.stringify(latestWatchArray))
+        localStorage.removeItem('latestWatchedMoviesArray');
+        localStorage.setItem('latestWatchedMoviesArray', JSON.stringify(latestWatchArray))
       }
     }else {
       latestWatchArray = [{itemID:this.movieId, itemName:this.movieName, itemPoster:this.moviePoster}];
-      localStorage.setItem('latestWatchArray', JSON.stringify(latestWatchArray));
+      localStorage.setItem('latestWatchedMoviesArray', JSON.stringify(latestWatchArray));
     }
     
   }

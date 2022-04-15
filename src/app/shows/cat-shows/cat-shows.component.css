@@ -34,7 +34,6 @@
   justify-content: center;
 }
 
-
 .no-items-component {
   height: 80vh;
   display: flex;
@@ -42,15 +41,14 @@
   justify-content: center;
 }
 
-
-.movies-container {
+.shows-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
   gap: 20px;
   padding: 20px 40px 40px;
 }
 
-.movie-item {
+.show-item {
   box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
   overflow: hidden;
   position: relative;
@@ -58,7 +56,7 @@
   cursor: pointer;
 }
 
-.movie-item .movie-poster {
+.show-item .show-poster {
   overflow: hidden;
   transition: 0.7s;
   min-height: 273px;
@@ -67,18 +65,18 @@
 }
 
 @media (max-width: 992px) {
-  .movie-item .movie-poster {
+  .show-item .show-poster {
     min-height: 300px;
     height: 300px;
   }
 }
 
-.movie-item:hover .movie-poster {
+.show-item:hover .show-poster {
   transform: translateY(-25%); 
 }
 
 
-.movie-item .movie-poster img{
+.show-item .show-poster img{
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -86,11 +84,11 @@
   z-index: -2;
 }
 
-.movie-item:hover .movie-poster img{
+.show-item:hover .show-poster img{
   animation: image-pop-rotate 6s linear forwards;
 }
   
-.movie-item .movie-name {
+.show-item .show-name {
   position: absolute;
   bottom: 0;
   left: 0;

@@ -6,6 +6,8 @@ export class DashedCatNamePipe implements PipeTransform {
     if(value) {
       if(value.includes('_')) {
         return value.replaceAll('_',' ')
+      }else if(value.includes('-')) {
+        return value.replaceAll('-',' ')
       }
     }
 

@@ -44,7 +44,7 @@
 .mobile-cat-button {
   position: absolute;
   right: -35px;
-  top: 25px;
+  top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;

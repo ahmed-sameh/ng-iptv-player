@@ -8,7 +8,11 @@
     <app-loading-spinner></app-loading-spinner>
   </div>
   
-  
+   
+ 
+ <div class="no-items-component" *ngIf="noItemsAvalible">
+  <app-no-items-available></app-no-items-available>
+ </div>
 
 
   <div class="movies-container" *ngIf="!isLoading">

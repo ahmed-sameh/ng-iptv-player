@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MoviesResponse, MoviesService } from '../movies.service';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-category-movies',
@@ -13,7 +12,7 @@ export class CategoryMoviesComponent implements OnInit {
   categoryName!: string;
   moviesOfCategory: MoviesResponse[] = [];
   isLoading = false;
-  rateStarIcon = faStar;
+  noItemsAvalible = false;
 
   constructor(private currentRoute: ActivatedRoute, private router :Router, private moviesService: MoviesService) { }
 
@@ -80,9 +79,10 @@ export class CategoryMoviesComponent implements OnInit {
     this.moviesService.getCategoryMovies(CatId).subscribe({
       next: allMoviesRes => {
         if(allMoviesRes.length === 0) {
-          this.router.navigate(['/home']);
+          this.noItemsAvalible = true;
         } else {
           this.moviesOfCategory = allMoviesRes;
+          this.noItemsAvalible = false;
           this.isLoading = false
         }
       },
