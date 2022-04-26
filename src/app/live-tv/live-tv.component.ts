@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./live-tv.component.css']
 })
 export class LiveTvComponent implements OnInit {
-
+  categoryVisible = false;
   constructor() { }
 
   ngOnInit(): void {

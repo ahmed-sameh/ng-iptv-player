@@ -2,9 +2,9 @@
 
   
   <div class="login-form">
-    <h2 class="title">Login to your account</h2>
+    <h2 class="title" [ngClass]="{'text-center': !isLoginMode}"> {{ isLoginMode ? 'Login to your account' : 'Contact US' }}  </h2>
 
-    <form (ngSubmit)="onSubmit(authForm)" #authForm="ngForm" *ngIf="!isLoading"> 
+    <form (ngSubmit)="onSubmit(authForm)" #authForm="ngForm" *ngIf="!isLoading && isLoginMode"> 
       
       <div class="input-container">
         <input type="text" class="form-control" id="username" name="username" placeholder="Username" ngModel required>
@@ -15,12 +15,31 @@
       </div>
       
       <div class="submit-btn">
-        <button type="submit" [disabled]="authForm.invalid">Submit</button>
+        <button type="submit" [disabled]="authForm.invalid">Login</button>
       </div>
     </form>
   
     <div class="loading-block text-center" *ngIf="isLoading">
       <app-loading-spinner></app-loading-spinner>
+    </div>
+
+    <div class="Contact-us" *ngIf="!isLoading && !isLoginMode">
+
+      <div class="contact-item">
+        <fa-icon [icon]="whatsAppIcon" class="contact-icon whatsApp"></fa-icon>
+        <a href="https://wtspee.com/201017411422" target="_blank" class="contact-link">UNIVERSE IPTV</a>
+      </div>
+
+      <div class="contact-item">
+        <fa-icon [icon]="telegramIcon" class="contact-icon telegram"></fa-icon>
+        <a href="https://t.me/+dRndWR4qhLc1ODM0" target="_blank" class="contact-link">Telegram</a>
+      </div>
+
+      <div class="contact-item">
+        <fa-icon [icon]="chromeIcon" class="contact-icon"></fa-icon>
+        <a href="https://universeiptv-ar.com" target="_blank" class="contact-link">universeiptv.com</a>
+      </div>
+
     </div>
   </div>
 

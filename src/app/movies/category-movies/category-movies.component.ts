@@ -23,9 +23,9 @@ export class CategoryMoviesComponent implements OnInit {
       if(this.moviesService.moviesCategories.length === 0) {
         this.moviesService.getCategories().subscribe({
           next: categories => {
-            this.categoryName = categories[0].category_name;
-            this.moviesService.catName = categories[0].category_name;
-            this.categoryId = categories[0].category_id;
+            this.categoryName = categories[3].category_name;
+            this.moviesService.catName = categories[3].category_name;
+            this.categoryId = categories[3].category_id;
             this.router.navigate(['/movies', this.categoryName, this.categoryId]);
             this.isLoading = false;
             
@@ -37,8 +37,8 @@ export class CategoryMoviesComponent implements OnInit {
         })
       }else {
         // case of load component and there is categories loaded but there is movies in movies service
-        this.categoryName = this.moviesService.moviesCategories[0].category_name;
-        this.categoryId = this.moviesService.moviesCategories[0].category_id;
+        this.categoryName = this.moviesService.moviesCategories[3].category_name;
+        this.categoryId = this.moviesService.moviesCategories[3].category_id;
         this.router.navigate(['/movies', this.categoryName, this.categoryId]);
         this.isLoading = false;
       }

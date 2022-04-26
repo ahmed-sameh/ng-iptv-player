@@ -1,0 +1,46 @@
+
+<ul class="categories-list"  [ngClass]="{ 'invisible': !categoriesVisible}">
+  <li class="cat-item" *ngFor="let cat of categories"
+      [id]="cat.category_id"
+      (click)="onRenderChannels(cat.category_id)"
+  > {{ cat.category_name | dashedCatName }} 
+  <fa-icon [icon]="rightArrowIcon" class="arrow-icon"></fa-icon> </li>
+</ul>
+
+
+<div class="channels-container">
+  <div class="categories-sidebar" *ngIf="!categoriesVisible">
+    <div class="cat-btn" (click)="categoriesVisible = true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  
+    <h3 class="cats-header">
+      categories
+    </h3>
+    
+    <ul class="channels-list" [ngClass]="{ 'channels-visible' : !categoriesVisible}">
+    
+      <li class="loading-spinner" *ngIf="!channelsAvalible">
+        <app-loading-spinner></app-loading-spinner>
+      </li>
+    
+      <li class="channel-item" *ngFor="let channel of categoryChannels"
+        [id]="channel.stream_id"
+        [ngClass]="{active : selectedChannelId === channel.stream_id}"
+        (click)="onRenderChannelStream(channel.stream_id, channel.name)">
+        <div class="channel-img">
+          <img [src]="channel.stream_icon ? channel.stream_icon : '../../../assets/imgs/no-channel.jpg'" [alt]="channel.name">
+        </div>
+        
+        <div class="channel-name"> {{ channel.name | dashedCatName }} </div>
+        
+      </li>
+    </ul>
+  </div>
+  
+  
+</div>
+  
+

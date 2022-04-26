@@ -6,6 +6,12 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+import {VgCoreModule} from '@videogular/ngx-videogular/core';
+import {VgControlsModule} from '@videogular/ngx-videogular/controls';
+import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
+import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
+import {VgStreamingModule} from '@videogular/ngx-videogular/streaming';
+
 import { DropdownDirective } from './shared/dropdown.directive';
 import { ToggleSearchDirective } from './navbar/toggle-search.directive';
 
@@ -38,6 +44,9 @@ import { CatShowsComponent } from './shows/cat-shows/cat-shows.component';
 import { NoItemsAvailableComponent } from './shared/no-items-available/no-items-available.component';
 import { HomeSliderComponent } from './home/home-slider/home-slider.component';
 import { ShowDetailsComponent } from './shows/show-details/show-details.component';
+import { MainLiveCategoriesComponent } from './live-tv/main-live-categories/main-live-categories.component';
+import { ChannelsPlayerComponent } from './live-tv/channels-player/channels-player.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -64,14 +73,22 @@ import { ShowDetailsComponent } from './shows/show-details/show-details.componen
     ShowsCategoriesListComponent,
     CatShowsComponent,
     HomeSliderComponent,
-    ShowDetailsComponent
+    ShowDetailsComponent,
+    MainLiveCategoriesComponent,
+    ChannelsPlayerComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
+    VgStreamingModule
   ],
   providers: [CookieService,HomeService, MoviesService],
   bootstrap: [AppComponent]

@@ -7,12 +7,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class VideoPlayerComponent implements OnInit {
   @Input() videoSrc!: string;
- 
+  @Input() videoType!: 'Stream' | 'Normal';
 
+  vidType!:string;
 
   constructor() { }
   ngOnInit(): void {
-
   }
 
 }

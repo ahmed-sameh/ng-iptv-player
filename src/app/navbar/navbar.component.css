@@ -68,6 +68,20 @@ nav .brand-logo h1{
 
 
 
+.login-btn {
+  background-color: #42B72A;
+  color: #FFF;
+  font-weight: 700;
+}
+
+.login-btn:focus {
+  box-shadow: none;
+}
+
+.login-btn:hover {
+  background-color: #36a420;
+}
+
 
 /* navlist styles */
 

@@ -1,11 +1,11 @@
-.item-video {
+.video-player {
   width: 70%;
-  height: 100%;
+  margin: auto;
 }
 
 
 @media (max-width: 767px) {
-  .item-video {
+  .video-player  {
     width: 100%;
   }
 }

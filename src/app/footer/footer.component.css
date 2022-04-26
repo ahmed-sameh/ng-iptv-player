@@ -1,0 +1,21 @@
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background-color: rgba(var(--secondary-color), 1);
+  color: #FFF;
+  padding: 15px 0;
+}
+
+footer .powered {
+  color: #eeeeee85;
+  font-size: 18px;
+  font-weight: 900;
+  margin-bottom: 0;
+  transition: var(--main-transtion-duration);
+}
+
+footer .powered:hover {
+  color: rgba(var(--main-color), 1);
+}

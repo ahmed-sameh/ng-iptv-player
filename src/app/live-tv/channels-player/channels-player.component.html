@@ -1,0 +1,19 @@
+
+
+<div class="channel-view"  *ngIf="channelSelected">
+  <div class="channel-name">
+    <h2> {{ streamName | dashedCatName }} </h2>
+  </div>
+  <div class="channel-player">
+    <app-video-player [videoSrc]="streamLink" [videoType]="'Stream'" ></app-video-player>
+  </div>
+</div>
+
+
+
+<div class="no-channel-selected" *ngIf="!channelSelected">
+  <h2>please select channel !</h2>
+</div>
+
+
+<app-footer></app-footer>

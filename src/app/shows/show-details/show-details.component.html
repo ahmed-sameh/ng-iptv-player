@@ -107,14 +107,22 @@
             <div class="col-sm-12">
                   <div class="player-bar">
                     
-                    <h3 class="show-name">{{showName}}</h3>
-                    <button type="button" class="close-button" (click)="PlayerRendered = false; trailerPlayerRendered= false; showPlayerRendered = false;">X</button>
+                    <h3 class="show-name"> {{!episodeName ? showName : episodeName | dashedCatName}}</h3>
+
+                    <div class="actions-btns">
+
+                      <a [href]="episodeVideoSrc" target="_blank" class="btn download-btn" title="Downlaod Episode">
+                        <fa-icon [icon]="downloadIcon"  class="download-icon"></fa-icon>
+                      </a>
+
+                      <button type="button" class="close-button" (click)="PlayerRendered = false; trailerPlayerRendered= false; showPlayerRendered = false;">X</button>
+                    </div>
                     
                 </div>
             </div>
 
             <div class="col-sm-12 video-player">
-              <app-video-player *ngIf="showPlayerRendered" [videoSrc]="episodeVideoSrc"></app-video-player>
+              <app-video-player *ngIf="showPlayerRendered" [videoSrc]="episodeVideoSrc" [videoType]="'Normal'"></app-video-player>
            
               <iframe *ngIf="trailerPlayerRendered" id="ytplayer" type="text/html" width="100%" height="100%" 
               [src]="showTrailer | safe"

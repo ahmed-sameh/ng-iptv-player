@@ -1,12 +1,16 @@
 <nav id="navbar">
-    <div class="container">
+    <div class="container" [ngClass]="{ 'flex-row' : !isAuthenticated }">
         <div class="brand-logo">
-          <!-- <img src="http://uniontv.online/images/106113565_661121187949923_810752369879621532_n.png" alt=""> -->
           <h1>UNIVERSE IPTV</h1>
         </div>
 
-        <ul class="nav-list" *ngIf="isAuthenticated">
+        <div class="contact-us" *ngIf="!isAuthenticated">
+          <button type="button" class="btn login-btn" (click)="onSwitchLoginMood()">{{ loginMode ? 'Join US !' : 'Login'  }}</button>
+        </div>
 
+
+        <ul class="nav-list" *ngIf="isAuthenticated">
+          
           <li class="nav-item">
             <a routerLink="/home" routerLinkActive="active" >home</a>
           </li>
@@ -40,12 +44,10 @@
             <fa-icon [icon]="settingIcon" class="nav-icon" appDropdown></fa-icon>
             
             <ul class="options-list">
-              <li class="option-item"><a>settings</a></li>
               <li class="option-item" (click)="onLogout()"><a>logout</a></li>
             </ul>
           </li>
-          
-          
+                  
         </ul>
     </div>
 </nav>

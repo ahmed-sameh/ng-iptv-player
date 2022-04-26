@@ -1,1 +1,24 @@
-<p>live-tv works!</p>
+<div class="row">
+
+  <div class="col-md-3 p-0 categories-component" [ngClass]="{'cat-visible' : categoryVisible}">
+    <app-main-live-categories></app-main-live-categories>
+    
+    
+    <div class="mobile-cat-button d-md-none"  (click)="categoryVisible = !categoryVisible">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    
+  </div>
+
+  <div class="col-sm-12 col-md-9 p-0 channel-component">
+    <app-channels-player></app-channels-player>
+  </div>
+
+</div>
+
+
+<!-- <div class="error-block" *ngIf="errorMessage">
+  <app-error [message] = "errorMessage"  (close)="onHandleError()"></app-error>
+</div> -->

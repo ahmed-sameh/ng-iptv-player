@@ -17,8 +17,9 @@ export interface AuthResponse {
 })
 export class AuthService {
   userData:any = null;
-  hostsArray = ['u-on.cc:2095', 'sharkiptvpro.xyz:80' ,'unioniptv.xyz', 'channelstv.online:8080'];
+  hostsArray = ['thanos.to:2095', 'sharkiptvpro.xyz:80' ,'unioniptv.xyz', 'channelstv.online:8080'];
   userAuthenticated =  new Subject<User | null>();
+  loginModeSwitched =  new Subject<boolean>();
   userAuthData:User | null = null;
   userLogout = false;
   private userExpirestimer: any;
@@ -47,12 +48,9 @@ export class AuthService {
             let expiresDate!:Date; 
             if(this.userData.user_info.exp_date) {
               expiresDate  = new Date( Date.now() + +this.userData.user_info.exp_date * 1000);
-              console.log('test')
             }else {
               expiresDate = new Date(Date.now() + 15552000)
             } 
-
-            console.log(expiresDate)
 
             const user = new User(this.userData.user_info.username, this.userData.user_info.password, expiresDate, `${this.userData.server_info.url}:${this.userData.server_info.port}`);
             this.userAuthenticated.next(user);

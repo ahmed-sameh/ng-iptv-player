@@ -527,6 +527,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 35px;
 }
 
 @media (max-width: 992px) {
@@ -555,7 +556,30 @@
 }
 
 
-.show-player .player-bar .close-button {
+.show-player .player-bar .actions-btns {
+  display: flex;
+  gap: 20px;
+}
+
+.show-player .actions-btns .download-btn {
+  background-color: rgba(var(--main-color),1);
+  padding: 3px 7px;
+  transition: var(--main-transtion-duration);
+}
+
+.show-player .actions-btns .download-btn .download-icon {
+  color: var(--main-color);
+}
+
+.show-player .actions-btns .download-btn:hover {
+  background-color: rgba(var(--secondary-color),1);
+}
+
+.show-player .actions-btns .download-btn:hover .download-icon {
+  color: rgba(var(--main-color),1);
+}
+
+.show-player .actions-btns .close-button {
   background-color: transparent;
   border: none;
   color: #eee;

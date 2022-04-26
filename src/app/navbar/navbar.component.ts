@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { faGear, faL, faMagnifyingGlass,faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faGear, faMagnifyingGlass,faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,7 @@ export class NavbarComponent implements OnInit {
   toggleNavSearchIcon = false;
   isAuthenticated = false;
   userSub!: Subscription;
+  loginMode  = true;
 
   constructor(private authService: AuthService) { }
 
@@ -37,9 +39,11 @@ export class NavbarComponent implements OnInit {
     })
   }
 
-  onSettingClicked() {
-    console.log('clicked')
+  onSwitchLoginMood() {
+    this.loginMode = !this.loginMode;
+    this.authService.loginModeSwitched.next(this.loginMode);
   }
+
 
   onLogout() {
     this.authService.logout()

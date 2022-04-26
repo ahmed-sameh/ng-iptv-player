@@ -1,0 +1,27 @@
+.channel-view {
+  min-height: 100vh;
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1;
+}
+
+.channel-name h2 {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+
+
+.no-channel-selected {
+  height: calc(100vh - 85px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.no-channel-selected h2 {
+  color: #ccc;
+  font-weight: 600;
+  text-transform: capitalize;
+}

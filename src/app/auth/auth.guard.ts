@@ -13,7 +13,6 @@ export class AuthGurd implements CanActivate {
     if(this.authService.userAuthData) {
       return true
     }else {
-      console.log('test')
       return this.router.createUrlTree(['/auth']);
     }
       

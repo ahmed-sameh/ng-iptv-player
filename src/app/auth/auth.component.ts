@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { faWhatsappSquare, faFacebook, faTelegram, faChrome } from '@fortawesome/free-brands-svg-icons';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -8,10 +10,17 @@ import { AuthService } from './auth.service';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
 
   userNotAuthenticated = false;
   isLoading = false;
+  loginMoodSub!: Subscription;
+  isLoginMode = true;
+
+  whatsAppIcon = faWhatsappSquare;
+  facebookIcon = faFacebook;
+  telegramIcon = faTelegram;
+  chromeIcon = faChrome;
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -23,7 +32,6 @@ export class AuthComponent implements OnInit {
       this.authService.userAuthenticated.subscribe({
         next: userAuthData => {
           if(userAuthData) {
-            console.log(userAuthData);
             this.router.navigate(['/home']);
           }else {
             this.userNotAuthenticated = true;
@@ -33,6 +41,10 @@ export class AuthComponent implements OnInit {
         }
       })
     }
+
+    this.loginMoodSub = this.authService.loginModeSwitched.subscribe({
+      next: isInLoginMode => this.isLoginMode = isInLoginMode
+    })
   }
   
   onSubmit(authForm: NgForm) {
@@ -49,6 +61,10 @@ export class AuthComponent implements OnInit {
   onHandleError() {
     this.userNotAuthenticated = false;
     this.isLoading = false;
+  }
+
+  ngOnDestroy(): void {
+      this.loginMoodSub.unsubscribe()
   }
 }
 

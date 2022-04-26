@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { faStar, faHeart, faBookmark, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faHeart, faBookmark, faPlay, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { exhaustMap, take } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
@@ -33,6 +33,7 @@ export class ShowDetailsComponent implements OnInit {
   heartIcon = faHeart;
   watchListIcon = faBookmark;
   playIcon = faPlay;
+  downloadIcon = faDownload;
 
   seasonsVisible = false;
 
@@ -56,6 +57,7 @@ export class ShowDetailsComponent implements OnInit {
   
   showVideoExtention = '';
   episodeVideoSrc = "";
+  episodeName = "";
 
   showSeasons:any[] = [];
   seasonEpisodes: any[] = [];
@@ -75,7 +77,6 @@ export class ShowDetailsComponent implements OnInit {
         return this.showsService.getShowDetails(this.showId)
       })).subscribe({
         next: (showObject: ShowDetailsResponse) => {
-          console.log(showObject)
           this.showName = showObject.info.name || showObject.info.o_name || 'show name';
           this.showPoster = showObject.info.cover ? showObject.info.cover : '../../../assets/imgs/no-image.jpg' ;
           this.showReleaseDate = showObject.info.releaseDate ? showObject.info.releaseDate.replaceAll('-', '/') : '';
@@ -205,6 +206,7 @@ export class ShowDetailsComponent implements OnInit {
 
   onWatchEpisode(episodeID: string, episodeName:string, episodeExtention:string ){
     this.episodeVideoSrc = `http://${this.userAuthData!.host}/series/${this.userAuthData!.username}/${this.userAuthData!.password}/${episodeID}.${episodeExtention}`;
+    this.episodeName = episodeName;
     this.PlayerRendered = true;
     this.showPlayerRendered = true;
     this.onAddToLatestWatch(episodeID, episodeName)
