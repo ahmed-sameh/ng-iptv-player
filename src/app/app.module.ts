@@ -48,6 +48,7 @@ import { MainLiveCategoriesComponent } from './live-tv/main-live-categories/main
 import { ChannelsPlayerComponent } from './live-tv/channels-player/channels-player.component';
 import { FooterComponent } from './footer/footer.component';
 import { FilterPipe } from './shared/filter.pipe';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,12 @@ import { FilterPipe } from './shared/filter.pipe';
     VgBufferingModule,
     VgStreamingModule
   ],
-  providers: [CookieService,HomeService, MoviesService],
+  providers: [
+    CookieService,
+    HomeService,
+    MoviesService,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
