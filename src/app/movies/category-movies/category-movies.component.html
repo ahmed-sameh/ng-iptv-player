@@ -1,19 +1,20 @@
-<div class="category-name">
+<div class="category-name" *ngIf="categoryName">
 
    <h2>{{ categoryName | dashedCatName }}</h2>
 
    <div class="category-search">
-     <form>
-       <input type="text">
-       <button type="submit"></button>
-     </form>
-   </div>
+       <input type="text" class="search-field" name="searchKeyword" placeholder="Search On Category..." [(ngModel)] = "searchKeyword" #filterInput autocomplete="off">
+  
+      <button type="button" class="clear-btn" *ngIf="filterInput.value " (click)="searchKeyword =''">
+        <fa-icon [icon]="clearIcon"></fa-icon>
+      </button>
+    </div>
 </div>
 
 
-  <div *ngIf="isLoading" class="loading-spinner">
-    <app-loading-spinner></app-loading-spinner>
-  </div>
+<div *ngIf="isLoading" class="loading-spinner">
+  <app-loading-spinner></app-loading-spinner>
+</div>
   
    
  
@@ -24,13 +25,13 @@
 
   <div class="movies-container" *ngIf="!isLoading">
     
-    <div class="movie-item" *ngFor="let movie of moviesOfCategory" [id]="movie.stream_id" [routerLink]="['/movie',movie.name | toUrlParams, movie.stream_id]">
+    <div class="movie-item" *ngFor="let movie of moviesOfCategory | filter:searchKeyword" [id]="movie.stream_id" [routerLink]="['/movie',movie.name | toUrlParams, movie.stream_id]">
 
       <div class="movie-poster">
         <img [src]="movie.stream_icon ? movie.stream_icon : '../../../assets/imgs/no-image.jpg' " class="card-thumb" [alt]="movie.name">
       </div>
 
-      <h4 class="movie-name">{{ movie.name | cutLongString }}</h4>
+      <h4 class="movie-name">{{ movie.name | cutLongString | dashedCatName}}</h4>
 
     </div>
 

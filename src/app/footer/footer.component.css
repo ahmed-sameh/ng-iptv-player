@@ -1,4 +1,7 @@
 footer {
+  height: 57px;
+  min-height: 57px;
+  max-height: 57px;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -111,7 +111,7 @@
 
                     <div class="actions-btns">
 
-                      <a [href]="episodeVideoSrc" target="_blank" class="btn download-btn" title="Downlaod Episode">
+                      <a [href]="episodeVideoSrc" target="_blank" class="btn download-btn" title="Downlaod Episode" *ngIf="showPlayerRendered">
                         <fa-icon [icon]="downloadIcon"  class="download-icon"></fa-icon>
                       </a>
 

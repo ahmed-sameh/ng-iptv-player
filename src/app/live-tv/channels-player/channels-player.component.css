@@ -1,9 +1,9 @@
 .channel-view {
-  min-height: 100vh;
+  height: calc(100vh - 122px);
   padding: 20px 40px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 50px;
   z-index: 1;
 }
 
@@ -15,7 +15,7 @@
 
 
 .no-channel-selected {
-  height: calc(100vh - 85px);
+  height: calc(100vh - 122px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,4 +24,13 @@
   color: #ccc;
   font-weight: 600;
   text-transform: capitalize;
+}
+
+
+
+@media (max-width: 767px) {
+  .channel-view,
+  .no-channel-selected {
+    height: calc(100vh - 143px);
+  }
 }

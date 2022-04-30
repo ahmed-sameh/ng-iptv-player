@@ -113,9 +113,10 @@
   overflow-x: auto;
   scroll-behavior: smooth;
   flex: 1;
+  scrollbar-width: none;
 }
 
-.slider .slider-container::-webkit-scrollbar {
+.slider .slider-container::-webkit-scrollbar{
   display: none;
 }
 

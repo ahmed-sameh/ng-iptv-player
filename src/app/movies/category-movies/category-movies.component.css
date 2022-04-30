@@ -13,18 +13,46 @@
 }
 
 .category-name {
-  margin-top: 20px;
-  padding-left: 40px;
-  width: fit-content;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding: 0 40px;
+  width: 100%;
   gap: 20px;
 }
-
 
 .category-name h2{
   margin-bottom: 0;
   font-weight: 700;
+}
+
+.category-search {
+  position: relative;
+}
+
+.category-search .search-field {
+  min-width: 250px;
+  height: 35px;
+  padding: 10px;
+  font-weight: 600;
+  border: 2px solid rgba(var(--secondary-color), 0.5);
+  color: rgba(var(--secondary-color), 1);
+  border-radius: 3px;
+}
+
+.category-search .clear-btn {
+  justify-self: right;
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 10px 0 5px;
+  background: none;
+  border: none;
+  color: red;
+  font-size: 18px;
 }
 
 .loading-spinner {
@@ -38,10 +66,26 @@
 .no-items-component {
   height: 80vh;
   display: flex;
+  flex-direction: column;
+  gap: 10px;
   align-items: center;
   justify-content: center;
 }
 
+.no-items-component .back-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid rgba(var(--main-color));
+  padding: 10px;
+  font-size: 18px;
+  font-weight: 900;
+  text-transform: capitalize;
+  transition: var(--main-transtion-duration);
+}
+
+.no-items-component .back-btn:hover {
+  padding: 10px 30px;
+}
 
 .movies-container {
   min-height: 100vh;
@@ -52,6 +96,7 @@
 }
 
 .movie-item {
+  max-height: 300px;
   box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
   overflow: hidden;
   position: relative;
@@ -110,3 +155,4 @@
   text-align: center;
   text-transform: capitalize;
 }
+

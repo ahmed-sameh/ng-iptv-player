@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MoviesResponse, MoviesService } from '../movies.service';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-category-movies',
@@ -11,12 +12,15 @@ export class CategoryMoviesComponent implements OnInit {
   categoryId!: string;
   categoryName!: string;
   moviesOfCategory: MoviesResponse[] = [];
-  isLoading = false;
   noItemsAvalible = false;
+  isLoading = false;
+  clearIcon = faXmark;
+  searchKeyword = '';
 
   constructor(private currentRoute: ActivatedRoute, private router :Router, private moviesService: MoviesService) { }
 
   ngOnInit(): void {
+
     if(this.moviesService.catMovies.length === 0 && this.moviesOfCategory.length === 0 && this.currentRoute.snapshot.url.length === 0) {
 
       // case of load component and no category or movies exist in service or here in component
@@ -70,12 +74,14 @@ export class CategoryMoviesComponent implements OnInit {
         this.isLoading = false;
       }
   })
+
   }
 
 
 
   gettingCatMovies(CatId: string) {
     this.moviesOfCategory = [];
+    this.searchKeyword = '';
     this.moviesService.getCategoryMovies(CatId).subscribe({
       next: allMoviesRes => {
         if(allMoviesRes.length === 0) {
@@ -94,6 +100,5 @@ export class CategoryMoviesComponent implements OnInit {
   }
 
 
-  
 
 }

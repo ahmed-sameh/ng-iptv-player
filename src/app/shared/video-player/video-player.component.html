@@ -3,7 +3,6 @@
 
   <video [vgMedia]="$any(media)" #media id="normalVideo" preload="auto" crossorigin *ngIf="videoType === 'Normal'">
       <source [src]="videoSrc" type="video/mp4">
-      <source [src]="videoSrc" type="video/mkv">
   </video>
 
   <vg-buffering vgFor="normalVideo"></vg-buffering>
@@ -40,3 +39,12 @@
     <vg-fullscreen></vg-fullscreen>
 </vg-controls>
 </vg-player>
+
+<!-- 
+
+<video>
+</video>
+
+<video width="320" height="240" controls>
+  <source src="http://thanos.to:2095/series/iphone/747747/75608.mp4"type='video/mp4'>
+</video> -->

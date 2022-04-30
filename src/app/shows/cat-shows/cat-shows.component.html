@@ -1,6 +1,15 @@
 <div class="category-name">
 
   <h2>{{ categoryName | dashedCatName }}</h2>
+
+  
+  <div class="category-search">
+    <input type="text" class="search-field" name="searchKeyword" placeholder="Search On Category..." [(ngModel)] = "searchKeyword" #filterInput autocomplete="off">
+
+   <button type="button" class="clear-btn" [ngStyle]="{display : filterInput.value ? 'block' : 'none'}" (click)="searchKeyword =''">
+     <fa-icon [icon]="clearIcon"></fa-icon>
+   </button>
+ </div>
 </div>
 
 
@@ -16,7 +25,7 @@
 
  <div class="shows-container" *ngIf="!isLoading && !noItemsAvalible">
    
-   <div class="show-item" *ngFor="let show of showsOfCategory" [id]="show.series_id" [routerLink]="['/show',show.name | toUrlParams, show.series_id]">
+   <div class="show-item" *ngFor="let show of showsOfCategory | filter:searchKeyword" [id]="show.series_id" [routerLink]="['/show',show.name | toUrlParams, show.series_id]">
      <div class="show-poster">
        <img [src]="show.cover ? show.cover : '../../../assets/imgs/no-image.jpg' " class="card-thumb" [alt]="show.name">
      </div>

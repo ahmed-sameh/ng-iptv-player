@@ -47,33 +47,35 @@ import { ShowDetailsComponent } from './shows/show-details/show-details.componen
 import { MainLiveCategoriesComponent } from './live-tv/main-live-categories/main-live-categories.component';
 import { ChannelsPlayerComponent } from './live-tv/channels-player/channels-player.component';
 import { FooterComponent } from './footer/footer.component';
+import { FilterPipe } from './shared/filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HomeComponent,
+    HomeSliderComponent,
     MoviesComponent,
+    CategoryMoviesComponent,
+    MovieDetailsComponent,
+    MoviesCategoriesComponent,
     ShowsComponent,
+    ShowsCategoriesListComponent,
+    CatShowsComponent,
+    ShowDetailsComponent,
     LiveTvComponent,
     DropdownDirective,
     ToggleSearchDirective,
     ErrorComponent,
     LoadingSpinnerComponent,
-    MoviesCategoriesComponent,
-    CategoryMoviesComponent,
     cutStringsPipe,
     DashedCatNamePipe,
     urlParamsTransformPipe,
-    MovieDetailsComponent,
     VideoPlayerComponent,
     SafePipe,
+    FilterPipe,
     NoItemsAvailableComponent,
     AuthComponent,
-    ShowsCategoriesListComponent,
-    CatShowsComponent,
-    HomeSliderComponent,
-    ShowDetailsComponent,
     MainLiveCategoriesComponent,
     ChannelsPlayerComponent,
     FooterComponent

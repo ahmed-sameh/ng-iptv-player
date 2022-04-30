@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ShowsService, ShowssResponse } from '../shows.service';
 
 @Component({
@@ -13,6 +14,8 @@ export class CatShowsComponent implements OnInit {
   showsOfCategory: ShowssResponse[] = [];
   isLoading = false;
   noItemsAvalible = false;
+  clearIcon = faXmark;
+  searchKeyword = '';
 
   constructor(private currentRoute: ActivatedRoute, private router :Router, private showsService: ShowsService) { }
 
@@ -76,6 +79,7 @@ export class CatShowsComponent implements OnInit {
 
   gettingCatShows(CatId: string) {
     this.showsOfCategory = [];
+    this.searchKeyword = '';
     this.showsService.getCategoryShows(CatId).subscribe({
       next: allShowsResp => {
         

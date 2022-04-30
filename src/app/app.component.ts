@@ -1,3 +1,4 @@
+
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from './auth/auth.service';
 
@@ -8,11 +9,13 @@ import { AuthService } from './auth/auth.service';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
-  title = 'ng-iptv';
 
+  toTopBtnDisplayed = false;
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-      this.authService.autoLogin();
+
+    this.authService.autoLogin();
   }
+
 }
