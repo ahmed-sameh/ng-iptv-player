@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { faWhatsappSquare, faFacebook, faTelegram, faChrome } from '@fortawesome/free-brands-svg-icons';
+import { faChrome, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -17,9 +17,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   loginMoodSub!: Subscription;
   isLoginMode = true;
 
-  whatsAppIcon = faWhatsappSquare;
-  facebookIcon = faFacebook;
-  telegramIcon = faTelegram;
+  twitterIcon = faTwitter;
   chromeIcon = faChrome;
 
   constructor(private authService: AuthService, private router: Router) { }
@@ -67,10 +65,3 @@ export class AuthComponent implements OnInit, OnDestroy {
       this.loginMoodSub.unsubscribe()
   }
 }
-
-
-
-
-
-
-// fy 7aga bt emit null 7awal tshof hia fen 

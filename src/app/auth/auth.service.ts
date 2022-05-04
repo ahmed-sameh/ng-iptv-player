@@ -17,7 +17,7 @@ export interface AuthResponse {
 })
 export class AuthService {
   userData:any = null;
-  hostsArray = ['thanos.to:2095', 'sharkiptvpro.xyz:80' ,'unioniptv.xyz', 'channelstv.online:8080'];
+  hostsArray = ['thanos.to:2095'];
   userAuthenticated =  new Subject<User | null>();
   loginModeSwitched =  new Subject<boolean>();
   userAuthData:User | null = null;
@@ -40,7 +40,7 @@ export class AuthService {
           for(let [index,response] of responses.entries()) {   
             if(response.hasOwnProperty('user_info') && response.user_info.auth === 1 && index < responses.length) {
               this.userData = response;
-              // console.clear();
+              console.clear();
               break;
             }  
           }

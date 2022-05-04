@@ -1,0 +1,18 @@
+<section class="user-acc-info">
+
+  
+  <div class="container">
+
+    <h3 class="sec-header">Account Information</h3>
+
+    <ul class="user-info">
+      <li class="info-item">username : {{ username }} </li>
+      <li class="info-item">status : {{ status }} </li>
+      <li class="info-item">is trial : {{ trial }} </li>
+      <li class="info-item">active connections: {{ active_cons }} </li>
+      <li class="info-item">max connections : {{ max_cons }} </li>
+      <li class="info-item">create at : {{ creation_date | date: "medium" }} </li>
+      <li class="info-item">expiry date : {{ expire_date | date: "medium"  }} </li>
+    </ul>
+  </div>
+</section>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AccountInfoComponent } from './account-info/account-info.component';
 import { AuthComponent } from './auth/auth.component';
 import { AuthGurd } from './auth/auth.guard';
 import { ErrorComponent } from './error/error.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
   ]},
   {path:'show/:showName/:showId', component: ShowDetailsComponent},
   {path:'livetv', component: LiveTvComponent,canActivate: [AuthGurd]},
+  {path:'account-info', component: AccountInfoComponent,canActivate: [AuthGurd]},
   {path:'app-faild', component: ErrorComponent},
   {path:'', redirectTo: 'home', pathMatch: 'full'}
 ];

@@ -88,7 +88,7 @@
             </div>
 
             <div class="col-sm-12 video-player">
-              <app-video-player *ngIf="moviePlayerRendered" [videoSrc]="movieVideoSrc" [videoType]="'Normal'"></app-video-player>
+              <app-video-player *ngIf="moviePlayerRendered" [videoSrc]="movieVideoSrc"></app-video-player>
            
               <iframe *ngIf="trailerPlayerRendered" id="ytplayer" type="text/html" width="100%" height="100%" 
               [src]="movieTrailer | safe"

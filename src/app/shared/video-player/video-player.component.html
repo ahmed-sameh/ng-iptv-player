@@ -1,50 +1,5 @@
-
-<vg-player class="video-player">
-
-  <video [vgMedia]="$any(media)" #media id="normalVideo" preload="auto" crossorigin *ngIf="videoType === 'Normal'">
-      <source [src]="videoSrc" type="video/mp4">
-  </video>
-
-  <vg-buffering vgFor="normalVideo"></vg-buffering>
-  
-  <video #liveStream
-  #vgHls="vgHls"
-  [vgMedia]="$any(liveStream)"
-  [vgDash]="videoSrc"
-  [vgHls]="videoSrc"
-  id="streamVideo"
-  crossorigin
-  *ngIf="videoType === 'Stream'">
-</video>
-<vg-buffering vgFor="streamVideo"></vg-buffering>
-
-
-  <vg-buffering></vg-buffering>
-
-  <vg-scrub-bar style="z-index: 1;">
-      <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-      <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
-  </vg-scrub-bar>
-
-  <vg-controls  style="z-index: 1;">
-    <vg-play-pause></vg-play-pause>
-
-    <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
-
-    <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
-
-    <vg-mute></vg-mute>
-    <vg-volume></vg-volume>
-
-    <vg-fullscreen></vg-fullscreen>
-</vg-controls>
-</vg-player>
-
-<!-- 
-
-<video>
-</video>
-
-<video width="320" height="240" controls>
-  <source src="http://thanos.to:2095/series/iphone/747747/75608.mp4"type='video/mp4'>
-</video> -->
+<div  class="video-player">
+  <div id="mediaplayer" #player>
+    
+  </div>
+</div>

@@ -1,0 +1,54 @@
+.user-acc-info {
+  width: 100vw;
+  height: calc(100vh - 64px);
+  padding: var(--main-sec-padding);
+  background-image: url('../../assets/imgs/user-info-bg.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+} 
+
+@media (max-width: 400px) {
+  .user-acc-info {
+    margin-top: 85px;
+  }
+}
+@media (max-width: 992px) {
+  .user-acc-info {
+    height: calc(100vh - 86px);
+  }
+}
+
+
+.user-info {
+  background-color: rgba(255, 255, 255, .96);
+  width: 60%;
+  margin: auto;
+  padding: 15px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+  .user-info {
+    width: 100%;
+  }
+}
+
+.sec-header {
+  color: #FFF;
+  font-size: 32px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-align: center;
+  margin-bottom: 30px;
+  
+}
+
+.user-info .info-item{
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: capitalize;
+}

@@ -49,6 +49,7 @@ import { ChannelsPlayerComponent } from './live-tv/channels-player/channels-play
 import { FooterComponent } from './footer/footer.component';
 import { FilterPipe } from './shared/filter.pipe';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { AccountInfoComponent } from './account-info/account-info.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     AuthComponent,
     MainLiveCategoriesComponent,
     ChannelsPlayerComponent,
-    FooterComponent
+    FooterComponent,
+    AccountInfoComponent
   ],
   imports: [
     BrowserModule,
