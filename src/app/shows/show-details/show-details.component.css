@@ -196,7 +196,9 @@
 
   
   
-  
+.show-details-sec .show-details {
+  padding-bottom: 40px;
+} 
 
 .show-details-sec .show-details .show-header {
   display: flex;

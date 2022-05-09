@@ -93,74 +93,167 @@ export class MovieDetailsComponent implements OnInit {
       });
   }
 
-  onAddToWatchList() {
-    let watchedList:{itemID: string, itemName: string, itemPoster: string}[] = [];
 
-    if(localStorage.getItem('moviesWatchedList')) {
-      watchedList =  JSON.parse(localStorage.getItem('moviesWatchedList')!);
-      let movieExist = false;
-      watchedList.forEach(movie => {
-        if(movie.itemID === this.movieId) {
-          movieExist = true;
-        } 
-      }) 
-
-      if(!movieExist) {
-        watchedList.push({itemID: this.movieId, itemName: this.movieName, itemPoster: this.moviePoster});
-        localStorage.removeItem('moviesWatchedList');
-        localStorage.setItem('moviesWatchedList', JSON.stringify(watchedList))
-      }
-    }else {
-      watchedList = [{itemID:this.movieId, itemName:this.movieName, itemPoster:this.moviePoster}];
-      localStorage.setItem('moviesWatchedList', JSON.stringify(watchedList));
-    }
+  
+  getUserAuthData() {
+    return JSON.parse(localStorage.getItem('userData')!).username
   }
 
-  onAddToFavourites() {
-    let favMovieArray:{itemID: string, itemName: string, itemPoster: string}[] = [];
+  onAddToWatchList() {
 
-    if(localStorage.getItem('favMovieArray')) {
-      favMovieArray =  JSON.parse(localStorage.getItem('favMovieArray')!);
-      let movieExist = false;
-      favMovieArray.forEach(movie => {
-        if(movie.itemID === this.movieId) {
-          movieExist = true;
-        } 
-      }) 
 
-      if(!movieExist) {
-        favMovieArray.push({itemID: this.movieId, itemName: this.movieName, itemPoster: this.moviePoster});
-        localStorage.removeItem('favMovieArray');
-        localStorage.setItem('favMovieArray', JSON.stringify(favMovieArray))
+    let watchedListData: {[username: string] : {itemID: string, itemName: string, itemPoster: string}[]};
+
+    let watchedList:{itemID: string, itemName: string, itemPoster: string}[] = []
+
+
+
+    if(localStorage.getItem('moviesWatchedList')) {
+      watchedListData =  JSON.parse(localStorage.getItem('moviesWatchedList')!);
+      let userExist = false;
+   
+      for(let username in watchedListData) {
+        if(username === this.getUserAuthData()) {
+          watchedList = watchedListData[username];
+          userExist = true;
+          break;
+        }
       }
+
+
+      if(userExist) {
+        let movieExist = false;
+
+        watchedList.forEach(movie => {
+          if(movie.itemID === this.movieId) {
+            movieExist = true;
+          } 
+        }) 
+  
+        if(!movieExist) {
+          watchedList.push({itemID: this.movieId, itemName: this.movieName, itemPoster: this.moviePoster});
+          localStorage.removeItem('moviesWatchedList');
+          const username = this.getUserAuthData();
+          localStorage.setItem('moviesWatchedList', JSON.stringify({...watchedListData, [username]:watchedList}))
+        }
+      }else {
+        localStorage.removeItem('moviesWatchedList');
+        const username = this.getUserAuthData();
+        localStorage.setItem('moviesWatchedList', JSON.stringify({...watchedListData, [username]:[{itemID: this.movieId, itemName: this.movieName, itemPoster: this.moviePoster}]}))
+      }
+      
+      
     }else {
-      favMovieArray = [{itemID:this.movieId, itemName:this.movieName, itemPoster:this.moviePoster}];
-      localStorage.setItem('favMovieArray', JSON.stringify(favMovieArray));
+      const username = this.getUserAuthData();
+      watchedList = [{itemID:this.movieId, itemName:this.movieName, itemPoster:this.moviePoster}];
+      localStorage.setItem('moviesWatchedList', JSON.stringify({[username]:watchedList}));
     }
+    }
+
+
+
+
+    
+    onAddToFavourites() {
+
+      let favMoviesData: {[username: string] : {itemID: string, itemName: string, itemPoster: string}[]};
+
+      let favMovies:{itemID: string, itemName: string, itemPoster: string}[] = []
+  
+  
+  
+      if(localStorage.getItem('favMovieArray')) {
+        favMoviesData =  JSON.parse(localStorage.getItem('favMovieArray')!);
+        let userExist = false;
+     
+        for(let username in favMoviesData) {
+          if(username === this.getUserAuthData()) {
+            favMovies = favMoviesData[username];
+            userExist = true;
+            break;
+          }
+        }
+  
+  
+        if(userExist) {
+          let movieExist = false;
+  
+          favMovies.forEach(movie => {
+            if(movie.itemID === this.movieId) {
+              movieExist = true;
+            } 
+          }) 
+    
+          if(!movieExist) {
+            favMovies.push({itemID: this.movieId, itemName: this.movieName, itemPoster: this.moviePoster});
+            localStorage.removeItem('favMovieArray');
+            const username = this.getUserAuthData();
+            localStorage.setItem('favMovieArray', JSON.stringify({...favMoviesData, [username]:favMovies}))
+          }
+        }else {
+          localStorage.removeItem('favMovieArray');
+          const username = this.getUserAuthData();
+          localStorage.setItem('favMovieArray', JSON.stringify({...favMoviesData, [username]:[{itemID: this.movieId, itemName: this.movieName, itemPoster: this.moviePoster}]}))
+        }
+        
+        
+      }else {
+        const username = this.getUserAuthData();
+        favMovies = [{itemID:this.movieId, itemName:this.movieName, itemPoster:this.moviePoster}];
+        localStorage.setItem('favMovieArray', JSON.stringify({[username]:favMovies}));
+      }
+
   }
   
   
   
   onAddToLatestWatch() {
-    let latestWatchArray:{itemID: string, itemName: string, itemPoster: string}[] = [];
-  
+
+    let latestWatchData: {[username: string] : {itemID: string, itemName: string, itemPoster: string}[]};
+
+    let latestWatchedMovies:{itemID: string, itemName: string, itemPoster: string}[] = [];
+
+
+
     if(localStorage.getItem('latestWatchedMoviesArray')) {
-      latestWatchArray =  JSON.parse(localStorage.getItem('latestWatchedMoviesArray')!);
-      let movieExist = false;
-      latestWatchArray.forEach(movie => {
-        if(movie.itemID === this.movieId) {
-          movieExist = true;
-        } 
-      }) 
-  
-      if(!movieExist) {
-        latestWatchArray.push({itemID: this.movieId, itemName: this.movieName, itemPoster: this.moviePoster});
-        localStorage.removeItem('latestWatchedMoviesArray');
-        localStorage.setItem('latestWatchedMoviesArray', JSON.stringify(latestWatchArray))
+      latestWatchData =  JSON.parse(localStorage.getItem('latestWatchedMoviesArray')!);
+      let userExist = false;
+   
+      for(let username in latestWatchData) {
+        if(username === this.getUserAuthData()) {
+          latestWatchedMovies = latestWatchData[username];
+          userExist = true;
+          break;
+        }
       }
+
+
+      if(userExist) {
+        let movieExist = false;
+
+        latestWatchedMovies.forEach(movie => {
+          if(movie.itemID === this.movieId) {
+            movieExist = true;
+          } 
+        }) 
+  
+        if(!movieExist) {
+          latestWatchedMovies.push({itemID: this.movieId, itemName: this.movieName, itemPoster: this.moviePoster});
+          localStorage.removeItem('latestWatchedMoviesArray');
+          const username = this.getUserAuthData();
+          localStorage.setItem('latestWatchedMoviesArray', JSON.stringify({...latestWatchData, [username]:latestWatchedMovies}))
+        }
+      }else {
+        localStorage.removeItem('latestWatchedMoviesArray');
+        const username = this.getUserAuthData();
+        localStorage.setItem('latestWatchedMoviesArray', JSON.stringify({...latestWatchData, [username]:[{itemID: this.movieId, itemName: this.movieName, itemPoster: this.moviePoster}]}))
+      }
+      
+      
     }else {
-      latestWatchArray = [{itemID:this.movieId, itemName:this.movieName, itemPoster:this.moviePoster}];
-      localStorage.setItem('latestWatchedMoviesArray', JSON.stringify(latestWatchArray));
+      const username = this.getUserAuthData();
+      latestWatchedMovies = [{itemID:this.movieId, itemName:this.movieName, itemPoster:this.moviePoster}];
+      localStorage.setItem('latestWatchedMoviesArray', JSON.stringify({[username]:latestWatchedMovies}));
     }
     
   }

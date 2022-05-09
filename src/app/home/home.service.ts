@@ -15,7 +15,8 @@ export class HomeService {
   recentlyWatchedShows: SliderItem[] = [];
   favouritesShows: SliderItem[] = [];
   showsWatchList: SliderItem[] = [];
-  
+
+
   
 
  
@@ -23,7 +24,20 @@ export class HomeService {
   date = Math.floor(+new Date().getTime() / 1000) - 1209600;
 
 
-  constructor(private getDataService: GetDataService, private authService: AuthService) { }
+  constructor(private getDataService: GetDataService, private authService: AuthService) {
+    console.log('test home serv')
+    this.authService.userAuthenticated.subscribe(userData => {
+      if(!userData) {
+        this.recentlyAddedMovies = []
+        this.recentlyAddedShows = []
+      }
+    })
+  }
+
+
+  getUserAuthData() {
+    return JSON.parse(localStorage.getItem('userData')!).username
+  }
 
   getRecentlyAddedMovies() {
 
@@ -72,27 +86,67 @@ export class HomeService {
 
 
   getRecentlyWatchedMovies() {
+
     if(localStorage.getItem('latestWatchedMoviesArray')) {
-      const recentlyMovies = JSON.parse(localStorage.getItem('latestWatchedMoviesArray')!);
-      recentlyMovies.forEach((movie: any) => {
-        let movieItem = {id: movie.itemID, title: movie.itemName, posterSrc: movie.itemPoster};
-        this.recentlyWatchedMovies.push(movieItem);
-      })
-      return this.recentlyWatchedMovies
+
+      const recentlyMoviesData = JSON.parse(localStorage.getItem('latestWatchedMoviesArray')!);
+      let moviesList: {itemID: string, itemName: string, itemPoster: string}[] = [];
+      let userExist = false;
+
+      for(let username in recentlyMoviesData) {
+        if(username === this.getUserAuthData()) {
+          moviesList = recentlyMoviesData[username];
+          userExist = true;
+          break;
+        }
+      }
+
+      if(userExist) {
+
+        const recentlyMovies:any[] = [];
+        moviesList.forEach((movie: any) => {
+          let movieItem = {id: movie.itemID, title: movie.itemName, posterSrc: movie.itemPoster};
+          recentlyMovies.push(movieItem);
+        })
+        return recentlyMovies
+      }else {
+        return null;
+      }
+
     }else {
       return null;
     }
+
   }
 
 
   getFavouritesMovies() {
     if(localStorage.getItem('favMovieArray')) {
-      const favMovies = JSON.parse(localStorage.getItem('favMovieArray')!);
-      favMovies.forEach((movie: any) => {
-        let movieItem = {id: movie.itemID, title: movie.itemName, posterSrc: movie.itemPoster};
-        this.favouritesMovies.push(movieItem);
-      })
-      return this.favouritesMovies
+
+      const favMovieData = JSON.parse(localStorage.getItem('favMovieArray')!);
+      let moviesList: {itemID: string, itemName: string, itemPoster: string}[] = [];
+      let userExist = false;
+
+      for(let username in favMovieData) {
+        if(username === this.getUserAuthData()) {
+          moviesList = favMovieData[username];
+          userExist = true;
+          break;
+        }
+      }
+
+      if(userExist) {
+
+        const favMovies:any[] = [];
+        moviesList.forEach((movie: any) => {
+          let movieItem = {id: movie.itemID, title: movie.itemName, posterSrc: movie.itemPoster};
+          favMovies.push(movieItem);
+        })
+        return favMovies
+      }else {
+        return null;
+      }
+
     }else {
       return null;
     }
@@ -101,12 +155,31 @@ export class HomeService {
 
   getMoviesWatchedList() {
     if(localStorage.getItem('moviesWatchedList')) {
-      const moviesList = JSON.parse(localStorage.getItem('moviesWatchedList')!);
-      moviesList.forEach((movie: any) => {
-        let movieItem = {id: movie.itemID, title: movie.itemName, posterSrc: movie.itemPoster};
-        this.moviesWatchList.push(movieItem);
-      })
-      return this.moviesWatchList
+
+      const watchedListData = JSON.parse(localStorage.getItem('moviesWatchedList')!);
+      let moviesList: {itemID: string, itemName: string, itemPoster: string}[] = [];
+      let userExist = false;
+
+      for(let username in watchedListData) {
+        if(username === this.getUserAuthData()) {
+          moviesList = watchedListData[username];
+          userExist = true;
+          break;
+        }
+      }
+
+      if(userExist) {
+
+        const moviesWatchList:any[] = [];
+        moviesList.forEach((movie: any) => {
+          let movieItem = {id: movie.itemID, title: movie.itemName, posterSrc: movie.itemPoster};
+          moviesWatchList.push(movieItem);
+        })
+        return moviesWatchList
+      }else {
+        return null;
+      }
+
     }else {
       return null;
     }
@@ -173,13 +246,35 @@ export class HomeService {
   
 
   getRecentlyWatchedShows() {
+
+
+
     if(localStorage.getItem('latestWatchedShowsArray')) {
-      const recentlyShows = JSON.parse(localStorage.getItem('latestWatchedShowsArray')!);
-      recentlyShows.forEach((show: any) => {
-        let showItem = {id: show.itemID, title: show.itemName, posterSrc: show.itemPoster};
-        this.recentlyWatchedShows.push(showItem);
-      })
-      return this.recentlyWatchedShows
+
+      const recentlyShowsData = JSON.parse(localStorage.getItem('latestWatchedShowsArray')!);
+      let recentlyShows: {itemID: string, itemName: string, itemPoster: string}[] = [];
+      let userExist = false;
+
+      for(let username in recentlyShowsData) {
+        if(username === this.getUserAuthData()) {
+          recentlyShows = recentlyShowsData[username];
+          userExist = true;
+          break;
+        }
+      }
+
+      if(userExist) {
+
+        const recentlyShowsItems:any[] = [];
+        recentlyShows.forEach((show: any) => {
+          let showItem = {id: show.itemID, title: show.itemName, posterSrc: show.itemPoster};
+          recentlyShowsItems.push(showItem);
+        })
+        return recentlyShowsItems
+      }else {
+        return null;
+      }
+
     }else {
       return null;
     }
@@ -187,13 +282,33 @@ export class HomeService {
 
 
   getFavouritesShows() {
+
     if(localStorage.getItem('favShowsArray')) {
-      const favShows = JSON.parse(localStorage.getItem('favShowsArray')!);
-      favShows.forEach((show: any) => {
-        let showItem = {id: show.itemID, title: show.itemName, posterSrc: show.itemPoster};
-        this.favouritesShows.push(showItem);
-      })
-      return this.favouritesShows
+
+      const favShowsData = JSON.parse(localStorage.getItem('favShowsArray')!);
+      let favShows: {itemID: string, itemName: string, itemPoster: string}[] = [];
+      let userExist = false;
+
+      for(let username in favShowsData) {
+        if(username === this.getUserAuthData()) {
+          favShows = favShowsData[username];
+          userExist = true;
+          break;
+        }
+      }
+
+      if(userExist) {
+
+        const favShowsItems:any[] = [];
+        favShows.forEach((show: any) => {
+          let showItem = {id: show.itemID, title: show.itemName, posterSrc: show.itemPoster};
+          favShowsItems.push(showItem);
+        })
+        return favShowsItems
+      }else {
+        return null;
+      }
+
     }else {
       return null;
     }
@@ -202,12 +317,31 @@ export class HomeService {
 
   getShowsWatchedList() {
     if(localStorage.getItem('tvShowsWatchedList')) {
-      const showsList = JSON.parse(localStorage.getItem('tvShowsWatchedList')!);
-      showsList.forEach((show: any) => {
-        let showItem = {id: show.itemID, title: show.itemName, posterSrc: show.itemPoster};
-        this.showsWatchList.push(showItem);
-      })
-      return this.showsWatchList
+
+      const watchedListData = JSON.parse(localStorage.getItem('tvShowsWatchedList')!);
+      let showsList: {itemID: string, itemName: string, itemPoster: string}[] = [];
+      let userExist = false;
+
+      for(let username in watchedListData) {
+        if(username === this.getUserAuthData()) {
+          showsList = watchedListData[username];
+          userExist = true;
+          break;
+        }
+      }
+
+      if(userExist) {
+
+        const showsWatchList:any[] = [];
+        showsList.forEach((show: any) => {
+          let showItem = {id: show.itemID, title: show.itemName, posterSrc: show.itemPoster};
+          showsWatchList.push(showItem);
+        })
+        return showsWatchList
+      }else {
+        return null;
+      }
+
     }else {
       return null;
     }

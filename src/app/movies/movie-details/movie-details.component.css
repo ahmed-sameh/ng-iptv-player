@@ -94,7 +94,10 @@
 
 
   
-  
+
+.movie-details-sec .movie-details {
+  padding-bottom: 40px;
+}
   
 
 .movie-details-sec .movie-details .movie-header {

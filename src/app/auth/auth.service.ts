@@ -17,7 +17,7 @@ export interface AuthResponse {
 })
 export class AuthService {
   userData:any = null;
-  hostsArray = ['thanos.to:2095'];
+  hostsArray = ['thanos.to:2095', 'unioniptv.xyz'];
   userAuthenticated =  new Subject<User | null>();
   loginModeSwitched =  new Subject<boolean>();
   userAuthData:User | null = null;
@@ -97,7 +97,7 @@ export class AuthService {
       clearTimeout(this.userExpirestimer)
     }
 
-    this.userExpirestimer = null
+    this.userExpirestimer = null;
   }
 
   autoLogout(expiresDuration: number) {

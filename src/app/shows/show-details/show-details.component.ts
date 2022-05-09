@@ -111,27 +111,64 @@ export class ShowDetailsComponent implements OnInit {
     }
   }
 
+
+
+  getUserAuthData() {
+    return JSON.parse(localStorage.getItem('userData')!).username
+  }
+
   onAddToWatchList(){
-    let watchedList:{itemID: string, itemName: string, itemPoster: string}[] = [];
+
+    let showWatchedListData: {[username: string] : {itemID: string, itemName: string, itemPoster: string}[]};
+    
+    let showsWatchList:{itemID: string, itemName: string, itemPoster: string}[] = []
+
+
+
 
     if(localStorage.getItem('tvShowsWatchedList')) {
-      watchedList =  JSON.parse(localStorage.getItem('tvShowsWatchedList')!);
-      let showExist = false;
-      watchedList.forEach(show => {
-        if(show.itemID === this.showId) {
-          showExist = true;
-        } 
-      }) 
-
-      if(!showExist) {
-        watchedList.push({itemID: this.showId, itemName: this.showName, itemPoster: this.showPoster});
-        localStorage.removeItem('tvShowsWatchedList');
-        localStorage.setItem('tvShowsWatchedList', JSON.stringify(watchedList))
+      showWatchedListData =  JSON.parse(localStorage.getItem('tvShowsWatchedList')!);
+      let userExist = false;
+   
+      for(let username in showWatchedListData) {
+        if(username === this.getUserAuthData()) {
+          showsWatchList = showWatchedListData[username];
+          userExist = true;
+          break;
+        }
       }
+
+
+      if(userExist) {
+        let showExist = false;
+
+        showsWatchList.forEach(show => {
+          if(show.itemID === this.showId) {
+            showExist = true;
+          } 
+        }) 
+  
+        if(!showExist) {
+          showsWatchList.push({itemID: this.showId, itemName: this.showName, itemPoster: this.showPoster});
+          localStorage.removeItem('tvShowsWatchedList');
+          const username = this.getUserAuthData();
+          localStorage.setItem('tvShowsWatchedList', JSON.stringify({...showWatchedListData, [username]:showsWatchList}))
+        }
+      }else {
+        localStorage.removeItem('tvShowsWatchedList');
+        const username = this.getUserAuthData();
+        localStorage.setItem('tvShowsWatchedList', JSON.stringify({...showWatchedListData, [username]:[{itemID: this.showId, itemName: this.showName, itemPoster: this.showPoster}]}))
+      }
+      
+      
     }else {
-      watchedList = [{itemID:this.showId, itemName:this.showName, itemPoster:this.showPoster}];
-      localStorage.setItem('tvShowsWatchedList', JSON.stringify(watchedList));
+      const username = this.getUserAuthData();
+      showsWatchList = [{itemID:this.showId, itemName:this.showName, itemPoster:this.showPoster}];
+      localStorage.setItem('tvShowsWatchedList', JSON.stringify({[username]:showsWatchList}));
     }
+
+
+
   }
 
 
@@ -141,25 +178,54 @@ export class ShowDetailsComponent implements OnInit {
 
 
   onAddToFavourites(){
-    let favShowsArray:{itemID: string, itemName: string, itemPoster: string}[] = [];
+
+    let favShowsData: {[username: string] : {itemID: string, itemName: string, itemPoster: string}[]};
+    
+    let favShows:{itemID: string, itemName: string, itemPoster: string}[] = []
+
+
+
 
     if(localStorage.getItem('favShowsArray')) {
-      favShowsArray =  JSON.parse(localStorage.getItem('favShowsArray')!);
-      let showExist = false;
-      favShowsArray.forEach(show => {
-        if(show.itemID === this.showId) {
-          showExist = true;
-        } 
-      }) 
-
-      if(!showExist) {
-        favShowsArray.push({itemID: this.showId, itemName: this.showName, itemPoster: this.showPoster});
-        localStorage.removeItem('favShowsArray');
-        localStorage.setItem('favShowsArray', JSON.stringify(favShowsArray))
+      favShowsData =  JSON.parse(localStorage.getItem('favShowsArray')!);
+      let userExist = false;
+   
+      for(let username in favShowsData) {
+        if(username === this.getUserAuthData()) {
+          favShows = favShowsData[username];
+          console.log(favShows)
+          userExist = true;
+          break;
+        }
       }
+
+
+      if(userExist) {
+        let showExist = false;
+
+        favShows.forEach(show => {
+          if(show.itemID === this.showId) {
+            showExist = true;
+          } 
+        }) 
+  
+        if(!showExist) {
+          favShows.push({itemID: this.showId, itemName: this.showName, itemPoster: this.showPoster});
+          localStorage.removeItem('favShowsArray');
+          const username = this.getUserAuthData();
+          localStorage.setItem('favShowsArray', JSON.stringify({...favShowsData, [username]:favShows}))
+        }
+      }else {
+        localStorage.removeItem('favShowsArray');
+        const username = this.getUserAuthData();
+        localStorage.setItem('favShowsArray', JSON.stringify({...favShowsData, [username]:[{itemID: this.showId, itemName: this.showName, itemPoster: this.showPoster}]}))
+      }
+      
+      
     }else {
-      favShowsArray = [{itemID:this.showId, itemName:this.showName, itemPoster:this.showPoster}];
-      localStorage.setItem('favShowsArray', JSON.stringify(favShowsArray));
+      const username = this.getUserAuthData();
+      favShows = [{itemID:this.showId, itemName:this.showName, itemPoster:this.showPoster}];
+      localStorage.setItem('favShowsArray', JSON.stringify({[username]:favShows}));
     }
   }
 
@@ -173,25 +239,77 @@ export class ShowDetailsComponent implements OnInit {
     
   
   onAddToLatestWatch(episodeID: string, episodeName: string) {
-    let latestWatchArray:{itemID: string, itemName: string, itemPoster: string}[] = [];
+    // let latestWatchArray:{itemID: string, itemName: string, itemPoster: string}[] = [];
   
+    // if(localStorage.getItem('latestWatchedShowsArray')) {
+    //   latestWatchArray =  JSON.parse(localStorage.getItem('latestWatchedShowsArray')!);
+    //   let showExist = false;
+    //   latestWatchArray.forEach(show => {
+    //     if(show.itemID === episodeID) {
+    //       showExist = true;
+    //     } 
+    //   }) 
+  
+    //   if(!showExist) {
+    //     latestWatchArray.push({itemID: episodeID, itemName: episodeName, itemPoster: this.showPoster});
+    //     localStorage.removeItem('latestWatchedShowsArray');
+    //     localStorage.setItem('latestWatchedShowsArray', JSON.stringify(latestWatchArray))
+    //   }
+    // }else {
+    //   latestWatchArray = [{itemID:episodeID, itemName:episodeName, itemPoster: this.showPoster}];
+    //   localStorage.setItem('latestWatchedShowsArray', JSON.stringify(latestWatchArray));
+    // }
+
+
+    // ----------------------------------------------------------------------
+
+
+    let latestWatchedData: {[username: string] : {itemID: string, itemName: string, itemPoster: string}[]};
+    
+    let latestWatchedShows:{itemID: string, itemName: string, itemPoster: string}[] = []
+
+
+
+
     if(localStorage.getItem('latestWatchedShowsArray')) {
-      latestWatchArray =  JSON.parse(localStorage.getItem('latestWatchedShowsArray')!);
-      let showExist = false;
-      latestWatchArray.forEach(show => {
-        if(show.itemID === episodeID) {
-          showExist = true;
-        } 
-      }) 
-  
-      if(!showExist) {
-        latestWatchArray.push({itemID: episodeID, itemName: episodeName, itemPoster: this.showPoster});
-        localStorage.removeItem('latestWatchedShowsArray');
-        localStorage.setItem('latestWatchedShowsArray', JSON.stringify(latestWatchArray))
+      latestWatchedData =  JSON.parse(localStorage.getItem('latestWatchedShowsArray')!);
+      let userExist = false;
+   
+      for(let username in latestWatchedData) {
+        if(username === this.getUserAuthData()) {
+          latestWatchedShows = latestWatchedData[username];
+          userExist = true;
+          break;
+        }
       }
+
+
+      if(userExist) {
+        let movieExist = false;
+
+        latestWatchedShows.forEach(show => {
+          if(show.itemID === this.showId) {
+            movieExist = true;
+          } 
+        }) 
+  
+        if(!movieExist) {
+          latestWatchedShows.push({itemID: this.showId, itemName: this.showName, itemPoster: this.showPoster});
+          localStorage.removeItem('latestWatchedShowsArray');
+          const username = this.getUserAuthData();
+          localStorage.setItem('latestWatchedShowsArray', JSON.stringify({...latestWatchedData, [username]:latestWatchedShows}))
+        }
+      }else {
+        localStorage.removeItem('latestWatchedShowsArray');
+        const username = this.getUserAuthData();
+        localStorage.setItem('latestWatchedShowsArray', JSON.stringify({...latestWatchedData, [username]:[{itemID: this.showId, itemName: this.showName, itemPoster: this.showPoster}]}))
+      }
+      
+      
     }else {
-      latestWatchArray = [{itemID:episodeID, itemName:episodeName, itemPoster: this.showPoster}];
-      localStorage.setItem('latestWatchedShowsArray', JSON.stringify(latestWatchArray));
+      const username = this.getUserAuthData();
+      latestWatchedShows = [{itemID:this.showId, itemName:this.showName, itemPoster:this.showPoster}];
+      localStorage.setItem('latestWatchedShowsArray', JSON.stringify({[username]:latestWatchedShows}));
     }
     
   }
