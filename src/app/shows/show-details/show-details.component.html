@@ -115,14 +115,14 @@
                         <fa-icon [icon]="downloadIcon"  class="download-icon"></fa-icon>
                       </a>
 
-                      <button type="button" class="close-button" (click)="PlayerRendered = false; trailerPlayerRendered= false; showPlayerRendered = false;">X</button>
+                      <button type="button" class="close-button" (click)="onClosePlayer()">X</button>
                     </div>
                     
                 </div>
             </div>
 
             <div class="col-sm-12 video-player">
-              <app-video-player *ngIf="showPlayerRendered" [videoSrc]="episodeVideoSrc"></app-video-player>
+              <app-video-player *ngIf="showPlayerRendered" [videoSrc]="episodeVideoSrc" [videoType]="showVideoExtention"></app-video-player>
            
               <iframe *ngIf="trailerPlayerRendered" id="ytplayer" type="text/html" width="100%" height="100%" 
               [src]="showTrailer | safe"

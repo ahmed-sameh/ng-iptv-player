@@ -1,5 +1,6 @@
 
 <ul class="categories-list" >
+
   <li class=" cat-item" *ngFor="let cat of categories"
       [routerLink]="[cat.category_name | toUrlParams ,cat.category_id]" 
       routerLinkActive ="active"

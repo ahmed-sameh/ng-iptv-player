@@ -17,7 +17,7 @@ export interface AuthResponse {
 })
 export class AuthService {
   userData:any = null;
-  hostsArray = ['thanos.to:2095', 'unioniptv.xyz'];
+  hostsArray = ['thanos.to:2095', 'mh-tv.info:8080'];
   userAuthenticated =  new Subject<User | null>();
   loginModeSwitched =  new Subject<boolean>();
   userAuthData:User | null = null;
@@ -89,6 +89,8 @@ export class AuthService {
   logout() {
     this.userAuthenticated.next(null);
     localStorage.removeItem('userData');
+    localStorage.removeItem('jwplayerLocalId');
+    localStorage.removeItem('jwplayer.bandwidthEstimate');
     this.userAuthData = null;
     this.router.navigate(['/auth'])
     this.userLogout = true;

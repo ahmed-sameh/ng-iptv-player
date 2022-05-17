@@ -266,6 +266,15 @@ export class MovieDetailsComponent implements OnInit {
       
 
   
+  onClosePlayer() {
+    this.PlayerRendered = false;
+    this.trailerPlayerRendered= false;
+    this.moviePlayerRendered = false;
+    localStorage.removeItem('jwplayerLocalId');
+    localStorage.removeItem('jwplayer.bandwidthEstimate');
+    localStorage.removeItem('flowplayerTestStorage'); 
+  }
+  
 
 
 }

@@ -41,7 +41,7 @@
 .categories-sidebar {
   width: 50px;
   height: 100vh;
-  background-color: #232a34;
+  background-color: rgba(var(--secondary-color), 1);
   color: #fff;
 }
 

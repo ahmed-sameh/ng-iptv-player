@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { exhaustMap, take, tap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
+import { Movie } from '../home/movie.show.type';
 import { GetDataService } from '../shared/get.data.service';
 
 export interface CategoryResponse {

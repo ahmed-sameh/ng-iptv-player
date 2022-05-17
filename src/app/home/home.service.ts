@@ -41,7 +41,7 @@ export class HomeService {
 
   getRecentlyAddedMovies() {
 
-    if(this.authService.userAuthData) {
+    if(this.authService.userAuthData) { 
 
       return this.getDataService.getData(`http://${this.authService.userAuthData.host}/player_api.php?username=${this.authService.userAuthData.username}&password=${this.authService.userAuthData.password}&action=get_vod_streams`).pipe(map(
         (moviesResponse: Array<Movie>) => {

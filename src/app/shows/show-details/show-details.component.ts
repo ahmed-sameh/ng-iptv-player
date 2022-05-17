@@ -239,29 +239,6 @@ export class ShowDetailsComponent implements OnInit {
     
   
   onAddToLatestWatch(episodeID: string, episodeName: string) {
-    // let latestWatchArray:{itemID: string, itemName: string, itemPoster: string}[] = [];
-  
-    // if(localStorage.getItem('latestWatchedShowsArray')) {
-    //   latestWatchArray =  JSON.parse(localStorage.getItem('latestWatchedShowsArray')!);
-    //   let showExist = false;
-    //   latestWatchArray.forEach(show => {
-    //     if(show.itemID === episodeID) {
-    //       showExist = true;
-    //     } 
-    //   }) 
-  
-    //   if(!showExist) {
-    //     latestWatchArray.push({itemID: episodeID, itemName: episodeName, itemPoster: this.showPoster});
-    //     localStorage.removeItem('latestWatchedShowsArray');
-    //     localStorage.setItem('latestWatchedShowsArray', JSON.stringify(latestWatchArray))
-    //   }
-    // }else {
-    //   latestWatchArray = [{itemID:episodeID, itemName:episodeName, itemPoster: this.showPoster}];
-    //   localStorage.setItem('latestWatchedShowsArray', JSON.stringify(latestWatchArray));
-    // }
-
-
-    // ----------------------------------------------------------------------
 
 
     let latestWatchedData: {[username: string] : {itemID: string, itemName: string, itemPoster: string}[]};
@@ -327,9 +304,18 @@ export class ShowDetailsComponent implements OnInit {
     this.episodeName = episodeName;
     this.PlayerRendered = true;
     this.showPlayerRendered = true;
+    this.showVideoExtention = episodeExtention;
     this.onAddToLatestWatch(episodeID, episodeName)
   }
 
 
+  onClosePlayer() {
+    this.PlayerRendered = false;
+    this.trailerPlayerRendered= false;
+    this.showPlayerRendered = false;
+    localStorage.removeItem('jwplayerLocalId');
+    localStorage.removeItem('jwplayer.bandwidthEstimate');
+    localStorage.removeItem('flowplayerTestStorage'); 
+  }
 
 }
