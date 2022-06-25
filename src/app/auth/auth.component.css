@@ -147,7 +147,7 @@
 }
 
 .Contact-us .contact-icon {
-  font-size: 22px;
+  font-size: 24px;
 }
 
 .Contact-us .twitter{
@@ -160,7 +160,7 @@
 
 .Contact-us .contact-item .contact-link {
   color: rgba(var(--secondary-color),1);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   transition: var(--main-transtion-duration);
 }
@@ -171,4 +171,29 @@
 
 .error-block {
   z-index: 99999;
+}
+
+
+.twitter-icon {
+  color: #1DA1F2;
+}
+
+.site-icon {
+  color: rgba(var(--main-color) ,1);
+}
+
+.whats-icon {
+  color: #25D366;
+}
+
+.face-icon {
+  color: #4267B2;
+}
+
+.telegram-icon {
+  color: #0088CC ;
+}
+
+.others-icon {
+  color: rgba(var(--main-color) ,1);
 }

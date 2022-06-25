@@ -6,12 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import {VgCoreModule} from '@videogular/ngx-videogular/core';
-import {VgControlsModule} from '@videogular/ngx-videogular/controls';
-import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
-import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
-import {VgStreamingModule} from '@videogular/ngx-videogular/streaming';
-
 import { DropdownDirective } from './shared/dropdown.directive';
 import { ToggleSearchDirective } from './navbar/toggle-search.directive';
 
@@ -88,12 +82,7 @@ import { AccountInfoComponent } from './account-info/account-info.component';
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule,
-    FormsModule,
-    VgCoreModule,
-    VgControlsModule,
-    VgOverlayPlayModule,
-    VgBufferingModule,
-    VgStreamingModule
+    FormsModule
   ],
   providers: [
     CookieService,

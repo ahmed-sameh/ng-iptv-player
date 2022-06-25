@@ -25,14 +25,34 @@
 
     <div class="Contact-us" *ngIf="!isLoading && !isLoginMode">
 
-      <div class="contact-item">
-        <fa-icon [icon]="twitterIcon" class="contact-icon twitter"></fa-icon>
-        <a href="https://twitter.com/@UniverseTv_Ar" target="_blank" class="contact-link">UNIVERSE IPTV</a>
+      <div class="contact-item twitter-icon" *ngIf="twitterLink">
+        <fa-icon [icon]="twitterIcon" class="contact-icon twitter-icon"></fa-icon>
+        <a [href]="twitterLink" target="_blank" class="contact-link">Twitter</a>
+      </div>
+      
+      <div class="contact-item" *ngIf="whatsAppLink">
+        <fa-icon [icon]="whatsIcon" class="contact-icon whats-icon"></fa-icon>
+        <a [href]="whatsAppLink" target="_blank" class="contact-link">What'sapp</a>
+      </div>
+      
+      <div class="contact-item" *ngIf="telegramLink">
+        <fa-icon [icon]="teleIcon" class="contact-icon telegram-icon"></fa-icon>
+        <a [href]="telegramLink" target="_blank" class="contact-link">telegarm</a>
+      </div>
+      
+      <div class="contact-item" *ngIf="facebookLink">
+        <fa-icon [icon]="facebookIcon" class="contact-icon face-icon"></fa-icon>
+        <a [href]="facebookLink" target="_blank" class="contact-link">facebook</a>
+      </div>
+      
+      <div class="contact-item" *ngIf="websiteLink">
+        <fa-icon [icon]="chromeIcon" class="contact-icon site-icon"></fa-icon>
+        <a [href]="websiteLink" target="_blank" class="contact-link">Aroma Tv</a>
       </div>
 
-      <div class="contact-item">
-        <fa-icon [icon]="chromeIcon" class="contact-icon"></fa-icon>
-        <a href="https://universeiptv-ar.com" target="_blank" class="contact-link">universeiptv.com</a>
+      <div class="contact-item" *ngIf="othersLink">
+        <fa-icon [icon]="othersIcon" class="contact-icon others-icon"></fa-icon>
+        <a [href]="othersLink" target="_blank" class="contact-link">others</a>
       </div>
 
     </div>

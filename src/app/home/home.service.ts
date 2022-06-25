@@ -25,7 +25,6 @@ export class HomeService {
 
 
   constructor(private getDataService: GetDataService, private authService: AuthService) {
-    console.log('test home serv')
     this.authService.userAuthenticated.subscribe(userData => {
       if(!userData) {
         this.recentlyAddedMovies = []
@@ -45,8 +44,8 @@ export class HomeService {
 
       return this.getDataService.getData(`http://${this.authService.userAuthData.host}/player_api.php?username=${this.authService.userAuthData.username}&password=${this.authService.userAuthData.password}&action=get_vod_streams`).pipe(map(
         (moviesResponse: Array<Movie>) => {
-
-          const selectedMovies = moviesResponse.filter( movie => movie.added > this.date).slice(0,20);
+          
+          const selectedMovies = moviesResponse.filter( movie => movie.added > this.date).slice(0,150);
   
           let recentlyMovies:Array<SliderItem> = [];
     
@@ -68,7 +67,7 @@ export class HomeService {
       ),map(
         (moviesResponse: Array<Movie>) => {
   
-        const selectedMovies = moviesResponse.filter( movie => movie.added > this.date).slice(0,20);
+        const selectedMovies = moviesResponse.filter( movie => movie.added > this.date).slice(0,150);
   
         let recentlyMovies:Array<SliderItem> = [];
   
@@ -203,8 +202,8 @@ export class HomeService {
     if(this.authService.userAuthData) {
       return this.getDataService.getData(`http://${this.authService.userAuthData.host}/player_api.php?username=${this.authService.userAuthData.username}&password=${this.authService.userAuthData.password}&action=get_series`).pipe(map(
         (showsResponse: Array<Show>) => {
-          const selectedShows = showsResponse.filter(show => +show.last_modified > this.date).slice(0,20);
-          
+          const selectedShows = showsResponse.filter(show => +show.last_modified > this.date).slice(0,150);
+
           let recentlyShows:Array<SliderItem> = [];
           
           selectedShows.forEach( show => {
@@ -225,7 +224,7 @@ export class HomeService {
         }
       ),map(
         (showsResponse: Array<Show>) => {
-          const selectedShows = showsResponse.filter(show => +show.last_modified > this.date).slice(0,20);
+          const selectedShows = showsResponse.filter(show => +show.last_modified > this.date).slice(0,150);
           
           let recentlyShows:Array<SliderItem> = [];
           

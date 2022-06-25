@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, forkJoin, of, Subject } from 'rxjs';
+import { catchError, forkJoin, of, Subject, take } from 'rxjs';
 import { User } from './user.model';
 
 
@@ -11,21 +11,59 @@ export interface AuthResponse {
   exp_date: string;
   auth: 0 | 1;
 }
-
+ 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   userData:any = null;
-  hostsArray = ['thanos.to:2095', 'mh-tv.info:8080'];
+  hostsArray:any[] = [];
   userAuthenticated =  new Subject<User | null>();
   loginModeSwitched =  new Subject<boolean>();
   userAuthData:User | null = null;
   userLogout = false;
   private userExpirestimer: any;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+    
+    this.http.get('https://parseapi.back4app.com/classes/appServers',{
+      headers: new HttpHeaders({
+        'accept': 'application/json' 
+        , 'X-Parse-Application-Id': 'Ds8YNiIovplM2Irb1XHHom1LbB0oQxWDAUXraAAx' 
+        ,'X-Parse-REST-API-Key': 'EquITgXFv0SF5pM52ujKecVmpEDU2M1RlrTkl68k'
+      })
+    }).pipe(take(1)).subscribe({
+      next: (hosts: any) => {
+        hosts.results.forEach((host:any) => {
+          this.hostsArray.push(host.hostName)
+        })
+      }
+    })
+  }
 
+
+  
+  checkUserExistance(username: string, password: string) {
+    this.http.get('https://parseapi.back4app.com/classes/appUsers',{
+      headers: new HttpHeaders({
+        'accept': 'application/json' 
+        , 'X-Parse-Application-Id': 'Ds8YNiIovplM2Irb1XHHom1LbB0oQxWDAUXraAAx' 
+        ,'X-Parse-REST-API-Key': 'EquITgXFv0SF5pM52ujKecVmpEDU2M1RlrTkl68k'
+      })
+    }).subscribe({
+      next: (users:any) => {
+        const userExist = users.results.find((user: any) => user.username === username);
+
+        if(userExist) {
+          console.log(userExist)
+          this.login(username, password);
+        }else {
+          this.userAuthenticated.next(null);
+        }
+      },
+      error: () => this.userAuthenticated.next(null)
+    })
+  }
 
 
 
@@ -75,9 +113,6 @@ export class AuthService {
     if(new Date() < loadedUser.exp_date) {
       this.userAuthenticated.next(loadedUser);
       this.userAuthData = loadedUser;
-
-      const expiresDate = new Date(loadedUser.exp_date).getTime() - new Date().getTime();
-      this.autoLogout(expiresDate);
     }
 
 
@@ -104,5 +139,16 @@ export class AuthService {
 
   autoLogout(expiresDuration: number) {
     this.userExpirestimer = setTimeout(() => {this.logout()},expiresDuration)
+  }
+
+
+  getCommunicationLinks() {
+    return this.http.get('https://parseapi.back4app.com/classes/websiteData',{
+      headers: new HttpHeaders({
+        'accept': 'application/json' 
+        , 'X-Parse-Application-Id': 'Ds8YNiIovplM2Irb1XHHom1LbB0oQxWDAUXraAAx' 
+        ,'X-Parse-REST-API-Key': 'EquITgXFv0SF5pM52ujKecVmpEDU2M1RlrTkl68k'
+      })
+    })
   }
 }

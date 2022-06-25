@@ -21,15 +21,12 @@ export class VideoPlayerComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log(this.videoType)
     this.setPlayer();
   }
 
 
   setPlayer() {
     if(this.videoType === 'mkv') {
-      console.log('from flow player')
-      console.log(this.videoSrc)
       flowplayer(this.playerEl.nativeElement, {
         autoplay: true,
           aspectRatio: "16:9",
@@ -41,9 +38,6 @@ export class VideoPlayerComponent implements OnInit, OnChanges {
           }
         });
       } else {
-        
-        console.log(this.videoSrc)
-        console.log('from jw player')
       jwplayer("mediaplayer").setup({
         file: this.videoSrc,
         autostart: true,

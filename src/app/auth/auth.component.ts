@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { faChrome, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faChrome, faTwitter, faFacebook, faTelegram, faWhatsappSquare} from '@fortawesome/free-brands-svg-icons';
+import { faBullseye} from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -19,6 +20,17 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   twitterIcon = faTwitter;
   chromeIcon = faChrome;
+  othersIcon = faBullseye;
+  facebookIcon = faFacebook ;
+  teleIcon = faTelegram;
+  whatsIcon = faWhatsappSquare; 
+
+  twitterLink = '';
+  whatsAppLink = '';
+  websiteLink = '';
+  facebookLink = '';
+  telegramLink = '';
+  othersLink = '';
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -42,6 +54,17 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     this.loginMoodSub = this.authService.loginModeSwitched.subscribe({
       next: isInLoginMode => this.isLoginMode = isInLoginMode
+    });
+
+    this.authService.getCommunicationLinks().subscribe({
+      next: (links:any) => {
+        this.facebookLink = links.results[0].facebook;
+        this.othersLink = links.results[0].others;
+        this.telegramLink = links.results[0].telegram;
+        this.twitterLink = links.results[0].twitter;
+        this.websiteLink = links.results[0].website;
+        this.whatsAppLink = links.results[0].whatsapp;
+      }
     })
   }
   
@@ -51,7 +74,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
     this.isLoading = true;
     
-    this.authService.login(authForm.value.username, authForm.value.password)
+    this.authService.checkUserExistance(authForm.value.username, authForm.value.password);
     
   }
   

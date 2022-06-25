@@ -3,10 +3,10 @@
 /* global styles and  varibles */
 :root {
   /*yellow color*/
-  --main-color: 253, 198, 58;
+  --main-color: 234, 37, 61;
 
   /*gray color*/
-  --secondary-color: 35, 42, 52; 
+  --secondary-color: 4, 20, 36; 
   
   /* transtion duration */
   --main-transtion-duration: 0.3s;
@@ -45,7 +45,7 @@ input:focus, textarea:focus, select:focus{
   outline: none !important;
 }
 
-/* navbar styles */
+/* scroll styles */
 ::-webkit-scrollbar {
   width: 10px;
 }

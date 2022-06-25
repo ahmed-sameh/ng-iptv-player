@@ -26,9 +26,9 @@ export class CatShowsComponent implements OnInit {
       if(this.showsService.showsCategories.length === 0) {
         this.showsService.getCategories().subscribe({
           next: categories => {
-            this.categoryName = categories[1].category_name;
-            this.showsService.catName = categories[1].category_name;
-            this.categoryId = categories[1].category_id;
+            this.categoryName = categories[16].category_name;
+            this.showsService.catName = categories[16].category_name;
+            this.categoryId = categories[16].category_id;
             this.router.navigate(['/shows', this.categoryName, this.categoryId]);
             this.isLoading = false;
             
@@ -40,8 +40,8 @@ export class CatShowsComponent implements OnInit {
         })
       }else {
         // case of load component and there is categories loaded but there is shows in shows service
-        this.categoryName = this.showsService.showsCategories[1].category_name;
-        this.categoryId = this.showsService.showsCategories[1].category_id;
+        this.categoryName = this.showsService.showsCategories[16].category_name;
+        this.categoryId = this.showsService.showsCategories[16].category_id;
         this.router.navigate(['/shows', this.categoryName, this.categoryId]);
         this.isLoading = false;
       }

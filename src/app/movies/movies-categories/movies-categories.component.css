@@ -38,7 +38,8 @@
   height: 100%;
   width: 0%;
   z-index: 1;
-  background-color: rgba(var(--main-color), .2);
+  background-color: rgba(var(--secondary-color), .3);
+  color: rgba(var(--main-color));
   transition: 0.5s;
 }
 
@@ -48,5 +49,5 @@
 
 
 .categories-list .cat-item.active {
-  background-color: rgba(var(--main-color), .9);
+  background-color: rgba(var(--secondary-color), .3);
 }
